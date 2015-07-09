@@ -1,4 +1,15 @@
 $(document).ready(function(){
+	$.post('checkAuth.php',function(data){
+		if(data == 1){
+			window.location = LOGIN_PAGE;
+		}
+	});
+
+	$(window).unload(function(){
+		$.post('destroySession.php',function(data){
+			
+		})
+	})
 	var sel = $("select.yearList")
 	var date = new Date()
 	var years = date.getFullYear()

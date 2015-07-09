@@ -1,7 +1,7 @@
 var xmlHttp
 var line
 var str
-
+var LOGIN_PAGE = "http://120.24.232.140/LaPitto/"
 
 
 
@@ -252,6 +252,18 @@ function lockEvent(tof){
 }
 
 $(document).ready(function(){
+	$.post('checkAuth.php',function(data){
+		if(data == 1){
+			window.location = LOGIN_PAGE;
+		}
+	});
+
+	$(window).unload(function(){
+		$.post('destroySession.php',function(data){
+			
+		})
+	})
+
 	$("input[name='level']").click(function(){
 		relo();
 	});
