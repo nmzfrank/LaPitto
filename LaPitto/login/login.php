@@ -14,14 +14,10 @@
 	
 	if($result = mysql_fetch_array($check_query)){
 		if($hash == $result['password']){
-			if($result['status'] == 1){
-				echo(2);											//已有用户登录
-			}
-			else{
-				$_SESSION['curUser'] = $name;
-				echo(0);
-				mysql_query("UPDATE users SET status = 1 WHERE name = '$name'");												//用户状态设为已登录
-			}
+			
+			$_SESSION['curUser'] = $name;
+			echo(0);
+			mysql_query("UPDATE users SET status = 1 WHERE name = '$name'");												//用户状态设为已登录
 		}
 		else{
 			echo(1);
