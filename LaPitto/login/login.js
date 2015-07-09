@@ -66,9 +66,6 @@ $(document).ready(function(){
 			if (data == 1) {
 				alert('用户名或者账号错误！')
 			};
-			if (data == 2) {
-				alert('用户已登录！')
-			};
 			if (data == 0) {
 				window.location = HOMEPAGE;
 			};

@@ -264,6 +264,11 @@ $(document).ready(function(){
 		})
 	})
 
+	$('#logout').on('click',function(){
+		$.post('destroySession.php',function(data){
+			window.location = LOGIN_PAGE;
+		})
+	});
 	$("input[name='level']").click(function(){
 		relo();
 	});
