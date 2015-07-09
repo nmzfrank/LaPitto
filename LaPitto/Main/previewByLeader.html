@@ -1,0 +1,79 @@
+<?php session_start(); ?>
+<?php
+	$u_ID = $_SESSION['u_ID'];
+	$year = $_POST['year'];
+	$level = 3;
+	$con = mysql_connect('localhost','LaPitto','X2KxFXdTBmHeMwzm');
+	mysql_query('SET NAMES UTF8');  
+	if (!$con){
+		die('Could not connect: ' . mysql_error());
+	}
+	if(!mysql_select_db('LaPitto', $con))
+		die('Could not connect: ' . mysql_error());	
+	getMeeting($u_ID,$year,$level);
+	
+	
+	function getMeeting($u_ID, $year, $level){
+		$query = mysql_query("select distinct meeting.meeting from content, event, content_user, meeting where content_user.u_ID = '$u_ID' and content_user.c_ID = content.c_ID and content.e_ID = event.e_ID and event.m_ID = meeting.m_ID and meeting.year = '$year'");
+		while($ans = mysql_fetch_array($query)){
+			echo("<tr>");
+			echo("<td colspan='11'>");
+			echo("<div>".$year."-第".$ans['meeting']."次校长办公会"."</div>");
+			if($level>1){
+				getEvent($ans['meeting'],$u_ID,$level);
+			}
+			echo("</td>");
+			echo("</tr>");
+		}
+	}
+	
+	function getEvent($meeting, $u_ID,$level){
+		$query = mysql_query("select distinct content.e_ID, event.content from content, event, content_user, meeting where content_user.u_ID = '$u_ID' and content_user.c_ID = content.c_ID and content.e_ID = event.e_ID and event.m_ID = '$meeting'");
+		while($ans = mysql_fetch_array($query)){
+			echo("<div style='border:1px solid #F00;padding:5px 15px;margin-top:5px'>");
+			echo("议题： ");
+			echo($ans['content']);
+			
+			if($level>2){
+				getContent($ans['e_ID'], $u_ID);
+			}
+
+			echo("</div>");
+		}
+	}
+	
+	function getContent($e_ID, $u_ID){
+		$cid = $_POST['cid'];
+		$content = $_POST['content'];
+		$leader = $_POST['leader'];
+		$responsibility = $_POST['responsibility'];
+		$assistant = $_POST['assistant'];
+		$status = $_POST['status'];
+		$comment_b = $_POST['comment_b'];
+		$comment_a = $_POST['comment_a'];
+		$program = $_POST['program'];
+		$self_status = $_POST['self_status'];
+	
+		$status_dict = array();
+		$dict_query = mysql_query("select * from status_tran");
+		while($dict_ans = mysql_fetch_array($dict_query)){
+			$status_dict[$dict_ans['status']] = $dict_ans['string'];
+		}
+		
+		$query = mysql_query("select distinct content.* from content, content_user where content_user.u_ID = '$u_ID' and content_user.c_ID = content.c_ID and content.e_ID = '$e_ID'");
+		while($ans = mysql_fetch_array($query)){
+			echo("<div style='border:1px solid #0F0;padding:5px 15px;margin-top:5px'>");
+			if($cid=='true'){	echo("<div>"."意见编号：".$ans['c_index']."</div>");}
+			if($content=='true')	echo("<div>"."拟办意见：".$ans['opinion_a']."</div>");
+			if($leader=='true')	echo("<div>"."牵头领导：".$ans['leader']."</div>");
+			if($responsibility=='true')	echo("<div>"."牵头单位：".$ans['responsibility']."</div>");
+			if($assistant=='true')	echo("<div>"."协助单位：".$ans['assistant']."</div>");
+			if($status=='true')	echo("<div>"."落实状态：".$status_dict[$ans['status']]."</div>");
+			if($comment_b=='true')	echo("<div>"."备注：".$ans['comment_b']."</div>");
+			if($comment_a=='true')	echo("<div>"."落实备注：".$ans['comment_a']."</div>");
+			if($program=='true')	echo("<div>"."节点计划：".$ans['program']."</div>");
+			if($self_status=='true')	echo("<div>"."进度自评：".$status_dict[$ans['self_status']]."</div>");
+			echo("</div>");
+		}
+	}
+?>

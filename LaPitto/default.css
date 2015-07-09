@@ -1,0 +1,149 @@
+@CHARSET "UTF-8";
+
+body{
+	background: #1a2a31;
+	font-family: 黑体;
+}
+.doc {
+	color: #ccc;
+}
+.bodercenter {
+	margin-left: auto;
+	margin-right: auto;
+	margin-up: auto;
+	margin-bottom: auto;
+	width: 50%;
+	height: auto;
+
+}
+.banner {
+	background:url("img/loginbanner.jpg") repeat-x;
+	height:200px;
+	text-align:center;
+}
+.title{
+	padding:2px;
+	margin-bottom:2px;
+	background:#b9ec2d;
+}
+.view{
+	color:#FFFFFF;
+	}
+.textbox {
+	width:300px;
+	height:30px;
+	font-size:18px;
+	background:none;
+	padding:5px;
+	color:white;
+	border-style:solid;
+	border-width:1px;
+	border-color:white;
+}
+.normalcenter {
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.blank1{
+	height:50px;
+	}
+	
+#tblogin tr.hint1 td{
+	color:white;
+	font-size:18px;
+	text-align:left;
+	padding-top:10px;
+}
+.hint2{
+	text-align:center;
+	color:white;
+	padding:3px;
+}
+
+.btn1{
+	background:#b9ec2d;
+	margin:20px 0px 0px 0px;
+	height:50px;
+	width:310px;
+	font-size:24px;
+	text-align:center;
+	font-color:#1a2a31;
+	border-style:none;
+  	border-radius: 3px;
+}
+
+.blank2{
+	height:20px;
+	}
+
+.footer{
+	text-align:center;
+}
+
+#MainTable
+  {
+  width:100%;
+  border-collapse:collapse;
+  }
+
+#MainTable td
+  {
+  font-size:14px;
+  border:1px solid #b9ec2d;
+  }
+
+#MainTable th 
+  {
+  font-size:18px;
+  text-align:center;
+  padding-top:4px;
+  padding-bottom:4px;
+  background-color:#b9ec2d;
+  color:black;
+  }
+
+#MainTable tr.alt td 
+  {
+  background-color:#223740;
+  }
+  
+#MainTable tr td 
+  {
+  color:white;
+  }
+  
+#SmallTable
+  {
+  border-collapse:collapse;
+  }
+
+#SmallTable td
+  {
+  font-size:14px;
+  border:1px solid #b9ec2d;
+  }
+
+#SmallTable th 
+  {
+  font-size:18px;
+  text-align:center;
+  padding-top:4px;
+  padding-bottom:4px;
+  background-color:#b9ec2d;
+  color:white;
+  }
+
+#SmallTable tr.alt td 
+  {
+  background-color:#223740;
+  }
+  
+#SmallTable tr td 
+  {
+  color:black;
+  }
+
+a:link{color:#666;background:url(arrow_off.gif) #CCC no-repeat 5px 12px;text-decoration:none;}
+a:visited{color:#666;text-decoration:underline;}
+a:hover{color:#FFF; font-weight:bold;text-decoration:none;background:url(arrow_on.gif) #F00 no-repeat 5px 12px;}

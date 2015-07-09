@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>会议辅助管理系统</title>
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+<script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/LaPitto/default.css" />
+<script src="table.js"></script>
+<style type="text/css">
+  div.contentFloat{float: right;width: 80%;padding-right: 20px}
+</style>
+
+</head>
+<body onload="load()">
+<div class="title">校长办公室督办系统 - 当前用户：</div>
+<div class="container-fluid">
+<div class="row">
+<div class="col-lg-12"> 
+  <span style="color:#fff">
+  年份：<select id="year_a" class="yearList" style="color:#000">
+        </select>
+  </span>
+  <span style="color:#fff">
+  层级：<input type="radio" name="level" value="1"/>1
+        <input type="radio" name="level" value="2"/>2
+        <input type="radio" name="level" value="3"/>3
+  </span>
+
+  <span class='admin'>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">添加内容</button>
+  </span>
+  <span>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exportModal">导出</button>
+  </span>
+  <span class='admin'>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#importModal">导入</button>
+  </span>
+
+    
+  <span>
+    <a href="/LaPitto/Main/preview.html" target="_blank">
+      <button type="button" class="btn btn-primary pull-right">预览</button>
+    </a>
+  </span>
+  <div class="clearfix"></div>
+</div>
+<div class="col-lg-12">
+  <table id="MainTable" border="1" style="margin-top:10px">
+    <tr>
+      <td colspan="12"><h1 style="margin:5px">会议记录</h1></td>
+    </tr>
+  </table>
+  <br />
+  <br />  
+  
+  <span class="admin">
+  <table id="SmallTable" border="1" style="color:#fff">
+    <tr>
+      <td style="color:#fff">用户名</td>
+        <td style="color:#fff">密码</td>
+        <td style="color:#fff">中文名</td>
+        <td style="color:#fff">属性</td>
+        <td style="color:#fff">权重</td>
+        <td style="color:#fff">操作</td>
+    </tr>
+    <tr>
+      <td><input type="text" id="au_name"/></td>
+        <td><input type="text" id="au_pw"/></td>
+        <td><input type="text" id="au_cn"/></td>
+        <td><select id="au_usage">
+        <option>校领导</option>
+        <option>校单位</option>
+        </select>
+        </td>
+        <td><input type="text" id="au_weight"/></td>
+        <td><input type="button" onclick="addUser()" id = "au_button" value="注册或修改用户" /></td>
+    </tr>
+  </table>
+  </span> 
+
+  
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">添加会议</h4>
+        </div>
+        <div class="modal-body">
+          <div>年份：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="ac_year" class="yearList"></select></div>
+          <div>会议编号：&nbsp;&nbsp;&nbsp;<input type="text" id="vc_meeting"/></div>
+          <div>议题：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="ac_1"/></div>
+          <div>拟办意见：&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="ac_3"></textarea></div>
+          <div>牵头校领导：<select size=3 multiple="multiple" id="ac_leader"></select>（按住ctrl键进行多选）</div>
+          <div>牵头单位：&nbsp;&nbsp;&nbsp;<select size=3 multiple="multiple" id="ac_responsibility"></select>（按住ctrl键进行多选）</div>
+          <div>协助单位：&nbsp;&nbsp;&nbsp;<select size="3" multiple="multiple" id="ac_assistant"></select>（按住ctrl键进行多选）</div>
+          <div>落实状态：&nbsp;&nbsp;
+            <select id="ac_7">
+              <option>暂无</option>
+              <option>开始推进</option>
+              <option>推进中Ⅰ</option>
+              <option>推进中Ⅱ</option>
+              <option>推进中Ⅲ</option>
+              <option>推进中Ⅳ</option>
+              <option>推进中Ⅴ</option>
+              <option>推进中Ⅵ</option>
+              <option>推进中Ⅶ</option>
+              <option>基本完成</option>
+              <option>已完成</option>
+            </select>
+          </div>
+          <div>备注：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="ac_8"></textarea></div>
+          <div>落实备注：&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="ac_9"></textarea></div>
+          <div>节点计划：&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="ac_10"></textarea></div>
+          <div>进度自评：&nbsp;&nbsp;
+            <select id="ac_11">
+              <option>暂无</option>
+              <option>开始推进</option>
+              <option>推进中Ⅰ</option>
+              <option>推进中Ⅱ</option>
+              <option>推进中Ⅲ</option>
+              <option>推进中Ⅳ</option>
+              <option>推进中Ⅴ</option>
+              <option>推进中Ⅵ</option>
+              <option>推进中Ⅶ</option>
+              <option>基本完成</option>
+              <option>已完成</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" id="ac_button">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">修改会议</h4>
+        </div>
+        <div class="modal-body">
+          <div class="super">拟办意见：&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="rc_3"></textarea></div>
+          <div class="super">牵头校领导：<select size=3 multiple="multiple" id="rc_leader"></select>（按住ctrl键进行多选）</div>
+          <div class="super">牵头单位：&nbsp;&nbsp;&nbsp;<select size=3 multiple="multiple" id="rc_responsibility"></select>（按住ctrl键进行多选）</div>
+          <div class="super">协助单位：&nbsp;&nbsp;&nbsp;<select size="3" multiple="multiple" id="rc_assistant"></select>（按住ctrl键进行多选）</div>
+          <div class="super">落实状态：&nbsp;&nbsp;
+            <select id="rc_7">
+              <option>暂无</option>
+              <option>开始推进</option>
+              <option>推进中Ⅰ</option>
+              <option>推进中Ⅱ</option>
+              <option>推进中Ⅲ</option>
+              <option>推进中Ⅳ</option>
+              <option>推进中Ⅴ</option>
+              <option>推进中Ⅵ</option>
+              <option>推进中Ⅶ</option>
+              <option>基本完成</option>
+              <option>已完成</option>
+            </select>
+          </div>
+          <div class="super">备注：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="rc_8"></textarea></div>
+          <div class="comment modify">落实备注：&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="rc_9"></textarea></div>
+          <div class="program modify">节点计划：&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="rc_10"></textarea></div>
+          <div class="self modify">进度自评：&nbsp;&nbsp;
+            <select id="rc_11">
+              <option>暂无</option>
+              <option>开始推进</option>
+              <option>推进中Ⅰ</option>
+              <option>推进中Ⅱ</option>
+              <option>推进中Ⅲ</option>
+              <option>推进中Ⅳ</option>
+              <option>推进中Ⅴ</option>
+              <option>推进中Ⅵ</option>
+              <option>推进中Ⅶ</option>
+              <option>基本完成</option>
+              <option>已完成</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" id="rc_button">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">导出会议</h4>
+        </div>
+        <div class="modal-body">
+          <div style="padding:10px">导出：
+          <br/>
+          <textarea rows="20" cols="75" id="exportContent"></textarea></div>
+          <div>导出时请将文本框内容直接复制入excel表格第一格</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">导入会议</h4>
+        </div>
+        <div class="modal-body">
+          <div style="padding:10px">导入内容：
+          <br/>
+          <textarea rows="20" cols="75" id="importContent"></textarea></div>
+          <div>请将excel表格内容直接复制入文本框内即可完成导入</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" id="importButton">导入</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+</body>
+</html>

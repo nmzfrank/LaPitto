@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>预览</title>
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+<script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="preview.js"></script>
+<style type="text/css">
+  div.contentFloat{float: right;width: 80%;padding-right: 100px}
+</style>
+</head>
+<body>
+	<div style="margin-top:5px;margin-left:30px;">
+	
+
+
+				年份：<select id="year_a" class="yearList" style="color:#000"></select>
+
+			排序方式：
+				<select id="display">
+					<option value="leader">按领导排序</option>
+					<option value="meeting">按会议排序</option>
+				</select>
+
+			<input type="checkbox" id="cid"> 意见编号
+			<input type="checkbox" id="content"> 拟办意见
+			<input type="checkbox" id="leader"> 牵头领导
+			<input type="checkbox" id="responsibility"> 牵头单位
+			<input type="checkbox" id="assistant"> 协助单位
+			<input type="checkbox" id="comment_b"> 备注
+			<input type="checkbox" id="program"> 节点计划
+			<input type="checkbox" id="status"> 落实状态
+			<input type="checkbox" id="comment_a"> 落实备注
+			<input type="checkbox" id="self_status"> 进度自评
+			<button class="btn btn-info" id="displayPreview">显示预览</button>
+	</div>
+    <div class="col-lg-12">
+    <table id="MainTable" border="1" style="margin-top:10px">
+    <tr>
+      <td colspan="12">会议记录</td>
+    </tr>
+  </table>
+  </div>
+</body>
+</html>

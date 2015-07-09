@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>会议辅助管理系统</title>
+<link rel="stylesheet" type="text/css" href="/LaPitto/default.css" />
+<script src="login/login.js"></script>
+</head>
+<body>
+<div class="blank1">
+</div>
+<div id="title" class="banner" > 
+	<img src="img/logo.png">
+</div>
+<form>
+  <div id="login" class="bodercenter">
+    <table id="tblogin" class="normalcenter">
+      <tr class="hint1">
+      	<td>用户名
+        </td>
+      </tr>
+      <tr>
+        <td><input  name="name" type="text" id = "t_name"class="textbox" maxlength="20" /></td>
+       </tr>
+      <tr class="hint1">
+      <td >密码</td>
+      </tr>
+      <tr>
+        <td><input name="password" type="password" id = "t_pw" class="textbox" maxlength="20" /></td>
+      </tr>
+      <tr>
+      <td>
+        <input type="button"  class="btn1"
+						value="登  录" onclick="showHint(t_name.value, t_pw.value)" />
+      </td>
+      </tr>
+      <td><div id="hint" class="hint2"></div></td>
+      <tr>
+      </tr>
+    </table>
+  </div>
+</form>
+<div class="footer"><a href="comment/version.html" >施工日志</a></div>
+</body>
+</html>
