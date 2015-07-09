@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>会议辅助管理系统</title>
 <link rel="stylesheet" type="text/css" href="/LaPitto/default.css" />
+<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
 <script src="login/login.js"></script>
 </head>
 <body>
@@ -30,8 +31,7 @@
       </tr>
       <tr>
       <td>
-        <input type="button"  class="btn1"
-						value="登  录" onclick="showHint(t_name.value, t_pw.value)" />
+        <input type="button"  class="btn1" id="login-btn" value="登  录" />
       </td>
       </tr>
       <td><div id="hint" class="hint2"></div></td>

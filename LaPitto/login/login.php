@@ -1,7 +1,7 @@
 <?php session_start(); ?>
 <?php
-	$name = $_GET['name'];
-	$hash = md5($_GET['password']);
+	$name = $_POST['name'];
+	$hash = md5($_POST['password']);
 	$con = mysql_connect('localhost','LaPitto','X2KxFXdTBmHeMwzm');
 	
 	if (!$con){
@@ -14,19 +14,18 @@
 	
 	if($result = mysql_fetch_array($check_query)){
 		if($hash == $result['password']){
-			if($_SESSION['curUser'] == $name){
-				echo('用户已登录');
+			if($result['status'] == 1){
+				echo(2);											//已有用户登录
 			}
 			else{
 				$_SESSION['curUser'] = $name;
-				echo('验证成功');
+				echo(0);
+				mysql_query("UPDATE users SET status = 1 WHERE name = '$name'");												//用户状态设为已登录
 			}
 		}
 		else{
-			echo('用户名密码错误: ');
+			echo(1);
 		}
 	}
-	else{
-		echo('无此账户: '.$hash);
-	}
-	?>
+
+?>
