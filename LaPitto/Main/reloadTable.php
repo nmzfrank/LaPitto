@@ -20,7 +20,7 @@
 		while($ans = mysql_fetch_array($query)){
 			echo("<tr>");
 			echo("<td><div class='container-fluid'><div class='row'>");
-			echo("<div class='col-lg-12 lv-meeting'><h2 style='margin:10px'>".$year."-第".$ans['meeting']."次校长办公会"."</h2></div>");
+			echo("<div class='col-lg-12 lv-meeting' style='background-color:rgb(128,185,188); border-radius:0.5em; padding:5px;'><span style='font-size:1.5em;'>".$year."-第".$ans['meeting']."次校长办公会"."</span></div>");
 			getEvent($ans['meeting'],$u_ID,$level);
 			echo("</div></div></td>");
 			echo("</tr>");
@@ -31,9 +31,11 @@
 		$query = mysql_query("select distinct content.e_ID, event.content from content, event, content_user, meeting where content_user.u_ID = '$u_ID' and content_user.c_ID = content.c_ID and content.e_ID = event.e_ID and event.m_ID = meeting.m_ID and meeting.meeting = '$meeting' order by content.e_ID asc");
 		while($ans = mysql_fetch_array($query)){
 			echo("<div class='col-lg-12 lv-event'>");
-			echo("<h3>议题： ".$ans['content']."</h3>");
-			echo("</div>");
+			echo("<div class='panel panel-success' style='margin-top:10px;'>");
+			echo("<div class='panel-heading'>议题： ".$ans['content']."</div>");
+			echo("<div class='panel-body'>");
 			getContent($ans['e_ID'], $u_ID);
+			echo("</div></div></div>");
 		}
 	}
 	

@@ -48,8 +48,8 @@ function load(){
 	}
 	relo();
 	$(".lv-meeting").show();
-	$(".lv-event").show();
-	$(".lv-content").hide();
+	$(".panel-heading").show();
+	$(".panel-body").hide();
 }
 function relo(){
 	var tb = document.getElementById("MainTable")
@@ -269,27 +269,28 @@ $(document).ready(function(){
 		var sel_level = $("input[name='level']:checked").val()
 		if (sel_level == 1){
 			$(".lv-meeting").show();
-			$(".lv-event").hide();
-			$(".lv-content").hide();
+			$(".panel-heading").hide();
+			$(".panel-body").hide();
 		}
 		if (sel_level == 2){
 			$(".lv-meeting").show();
-			$(".lv-event").show();
-			$(".lv-content").hide();
+			$(".panel-heading").show();
+			$(".panel-body").hide();
 		}
 		if (sel_level == 3){
 			$(".lv-meeting").show();
-			$(".lv-event").show();
-			$(".lv-content").show();
+			$(".panel-heading").show();
+			$(".panel-body").show();
 		}
 	});
 
 	$(document).on('click','.lv-meeting',function(){
-		$(this).siblings('.lv-event').toggle();
+		var event_bar = $(this).siblings('.lv-event');
+		event_bar.toggle();
 	});
 
-	$(document).on('click',".lv-event",function(){
-		$(this).siblings('.lv-content').toggle();
+	$(document).on('click',".panel-heading",function(){
+		$(this).siblings('.panel-body').toggle();
 	});
 	
 	$('#logout').on('click',function(){
