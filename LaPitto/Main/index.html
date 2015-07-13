@@ -10,7 +10,8 @@
 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
 
 <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/LaPitto/default.css" />
+<link rel="stylesheet" type="text/css" href="/LaPitto/docs.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="/LaPitto/default.css" /> -->
 <script src="table.js"></script>
 <style type="text/css">
   div.contentFloat{float: right;width: 80%;padding-right: 20px}
@@ -25,11 +26,11 @@
 <div class="container-fluid">
 <div class="row">
 <div class="col-lg-12"> 
-  <span style="color:#fff">
+  <span>
   年份：<select id="year_a" class="yearList" style="color:#000">
         </select>
   </span>
-  <span style="color:#fff">
+  <span>
   层级：<input type="radio" name="level" value="1"/>1
         <input type="radio" name="level" value="2"/>2
         <input type="radio" name="level" value="3"/>3
@@ -55,16 +56,16 @@
   </span>
   <div class="clearfix"></div>
 </div>
-<div class="col-lg-12">
-  <table id="MainTable" border="1" style="margin-top:10px">
+<div class="col-lg-8 col-lg-push-2" style="padding-left: 8%;padding-right: 8%">
+  <table id="MainTable" class="table table-bordered table-striped" style="margin-top:10px;width:100%">
     <tr>
-      <td colspan="12"><h1 style="margin:5px">会议记录</h1></td>
+      <td colspan="12"><div style="margin:5px">校长办公会</div></td>
     </tr>
   </table>
   <br />
   <br />  
   
-  <span class="admin">
+  <!-- <span class="admin">
   <table id="SmallTable" border="1" style="color:#fff">
     <tr>
       <td style="color:#fff">用户名</td>
@@ -87,7 +88,7 @@
         <td><input type="button" onclick="addUser()" id = "au_button" value="注册或修改用户" /></td>
     </tr>
   </table>
-  </span> 
+  </span>  -->
 
   
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
