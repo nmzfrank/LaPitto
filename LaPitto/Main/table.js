@@ -47,12 +47,14 @@ function load(){
 		$("span.normal").hide()
 	}
 	relo();
-	
+	$(".lv-meeting").show();
+	$(".lv-event").show();
+	$(".lv-content").hide();
 }
 function relo(){
 	var tb = document.getElementById("MainTable")
 	str = "<tr>\
-        	<td colspan=\"12\"><h1 style='margin:5px'>会议记录</h1></td>\
+        	<td colspan=\"12\"><div style=\"margin:5px\">校长办公会</div></td>\
         </tr>" 
 	line = "undefined"
 
@@ -260,18 +262,42 @@ $(document).ready(function(){
 
 	$(window).unload(function(){
 		$.post('destroySession.php',function(data){
-			
 		})
-	})
+	});
 
+	$("input[name='level']").on('click',function(){
+		var sel_level = $("input[name='level']:checked").val()
+		if (sel_level == 1){
+			$(".lv-meeting").show();
+			$(".lv-event").hide();
+			$(".lv-content").hide();
+		}
+		if (sel_level == 2){
+			$(".lv-meeting").show();
+			$(".lv-event").show();
+			$(".lv-content").hide();
+		}
+		if (sel_level == 3){
+			$(".lv-meeting").show();
+			$(".lv-event").show();
+			$(".lv-content").show();
+		}
+	});
+
+	$(document).on('click','.lv-meeting',function(){
+		$(this).siblings('.lv-event').toggle();
+	});
+
+	$(document).on('click',".lv-event",function(){
+		$(this).siblings('.lv-content').toggle();
+	});
+	
 	$('#logout').on('click',function(){
 		$.post('destroySession.php',function(data){
 			window.location = LOGIN_PAGE;
 		})
 	});
-	$("input[name='level']").click(function(){
-		relo();
-	});
+
 	$("#year_a").on("click",function(){
 		$("input[name='level'][value='2']").attr('checked','true');
 		relo();

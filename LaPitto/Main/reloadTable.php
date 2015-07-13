@@ -19,12 +19,10 @@
 		$query = mysql_query("select distinct meeting.meeting from content, event, content_user, meeting where content_user.u_ID = '$u_ID' and content_user.c_ID = content.c_ID and content.e_ID = event.e_ID and event.m_ID = meeting.m_ID and meeting.year = '$year' order by meeting.meeting asc");
 		while($ans = mysql_fetch_array($query)){
 			echo("<tr>");
-			echo("<td colspan='8' cellspacing='10' cellpadding='10'>");
-			echo("<h2 style='margin:10px'>".$year."-第".$ans['meeting']."次校长办公会"."</h2>");
-			if($level>1){
-				getEvent($ans['meeting'],$u_ID,$level);
-			}
-			echo("</td>");
+			echo("<td><div class='container-fluid'><div class='row'>");
+			echo("<div class='col-lg-12 lv-meeting'><h2 style='margin:10px'>".$year."-第".$ans['meeting']."次校长办公会"."</h2></div>");
+			getEvent($ans['meeting'],$u_ID,$level);
+			echo("</div></div></td>");
 			echo("</tr>");
 		}
 	}
@@ -32,13 +30,10 @@
 	function getEvent($meeting, $u_ID,$level){
 		$query = mysql_query("select distinct content.e_ID, event.content from content, event, content_user, meeting where content_user.u_ID = '$u_ID' and content_user.c_ID = content.c_ID and content.e_ID = event.e_ID and event.m_ID = meeting.m_ID and meeting.meeting = '$meeting' order by content.e_ID asc");
 		while($ans = mysql_fetch_array($query)){
-			echo("<div style='border:1px solid #F00;padding:5px 15px;margin:5px 80px'>");
+			echo("<div class='col-lg-12 lv-event'>");
 			echo("<h3>议题： ".$ans['content']."</h3>");
-			if($level>2){
-				getContent($ans['e_ID'], $u_ID);
-			}
 			echo("</div>");
-			
+			getContent($ans['e_ID'], $u_ID);
 		}
 	}
 	
@@ -53,16 +48,12 @@
 
 		while($ans = mysql_fetch_array($query)){
 			$cid = $ans['c_index'];
-			echo("<div style='border:1px solid #0F0;padding:5px 10px;margin:5px 80px;padding-right:50px'>");
-			echo("<div class='cid'><div style='font-size:1.3em'>"."意见编号：</div><div class='contentFloat vc_meeting'>".$ans['c_index']."</div></div>");
-			echo("<div class='clearfix'></div>");
+			echo("<div class='cid col-lg-6 lv-content'><div style='font-size:1.3em'>"."意见编号：".$ans['c_index']."</div></div>");
+			echo("<div class='col-lg-6 lv-content'><div style='font-size:1.3em'>"."牵头领导：".$ans['leader']."</div></div>");
+			echo("<div class='col-lg-6 lv-content'><div style='font-size:1.3em'>"."牵头单位：".$ans['responsibility']."</div></div>");
+			echo("<div class='col-lg-6 lv-content'><div style='font-size:1.3em'>"."协助单位：".$ans['assistant']."</div></div>");
+			echo("<div class='col-lg-8 lv-content'>");
 			echo("<div><div style='font-size:1.3em'>"."拟办意见：</div><div class='contentFloat vc_3'>".$ans['opinion_a']."</div></div>");
-			echo("<div class='clearfix'></div>");
-			echo("<div><div style='font-size:1.3em'>"."牵头领导：</div><div class='contentFloat vc_leader'>".$ans['leader']."</div></div>");
-			echo("<div class='clearfix'></div>");
-			echo("<div><div style='font-size:1.3em'>"."牵头单位：</div><div class='contentFloat vc_responsibility'>".$ans['responsibility']."</div></div>");
-			echo("<div class='clearfix'></div>");
-			echo("<div><div style='font-size:1.3em'>"."协助单位：</div><div class='contentFloat vc_assistant'>".$ans['assistant']."</div></div>");
 			echo("<div class='clearfix'></div>");
 			echo("<div><div style='font-size:1.3em'>"."落实状态：</div><div class='contentFloat vc_7'>".$status_dict[$ans['status']]."</div></div>");
 			echo("<div class='clearfix'></div>");
@@ -189,6 +180,7 @@
 				echo("<div class='clearfix'></div>");
 				echo("<button class='btn btn-primary pull-right modify' data-cid='$cid' >修改</button>");
 				echo("<div class='clearfix'></div>");
+				echo("</div>");
 			}
 			echo("</div>");
 		}
