@@ -260,11 +260,6 @@ $(document).ready(function(){
 		}
 	});
 
-	$(window).unload(function(){
-		$.post('destroySession.php',function(data){
-		})
-	});
-
 	$("input[name='level']").on('click',function(){
 		var sel_level = $("input[name='level']:checked").val()
 		if (sel_level == 1){
