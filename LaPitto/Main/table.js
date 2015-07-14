@@ -98,7 +98,7 @@ function showLeaderList(){
 	function(data,status){
 		ac.append(data)
 	})
-	var rc = $("select#rc_leader")
+	var rc = $("#rc_leader")
 	$.post("getLeader.php",
 	{
 	},
@@ -113,7 +113,7 @@ function showAssistantList(){
 	function(data,status){
 		ac.append(data)
 	})
-	var rc = $("select#rc_assistant")
+	var rc = $("#rc_assistant")
 	$.post("getAssistant.php",{},
 	function(data,status){
 		rc.append(data)
@@ -128,7 +128,7 @@ function showResponsibility(){
 	function(data,status){
 		ac.append(data)
 	})
-	var rc = $("select#rc_responsibility")
+	var rc = $("#rc_responsibility")
 	$.post("getResponsibility.php",
 	{
 	},
@@ -421,104 +421,104 @@ $(document).ready(function(){
 		});
 		$("#modifyModal").modal('hide');
 	});
-	$("#modifyModal").on('show.bs.modal',function(event){
-		var button = $(event.relatedTarget);
-		var cid = button.data('cid');
-		var modal = $(this);
-		var count;
-		var is_super;
-		$.post("load.php",function(user){
-			if(user == "管理员"){
-				is_super = 1;
-			} else{
-				is_super = 0;
-				$(".super").hide();
-				if($(".self.lock").length > 0){
-					$(".modify.self").hide();
-				}
-				if($(".comment.lock").length > 0){
-					$(".modify.comment").hide();
-				}
-				if($(".program.lock").length > 0){
-					$(".modify.program").hide();
-				}
-			}
-		});
+	// $("#modifyModal").on('show.bs.modal',function(event){
+	// 	var button = $(event.relatedTarget);
+	// 	var cid = button.data('cid');
+	// 	var modal = $(this);
+	// 	var count;
+	// 	var is_super;
+	// 	$.post("load.php",function(user){
+	// 		if(user == "管理员"){
+	// 			is_super = 1;
+	// 		} else{
+	// 			is_super = 0;
+	// 			$(".super").hide();
+	// 			if($(".self.lock").length > 0){
+	// 				$(".modify.self").hide();
+	// 			}
+	// 			if($(".comment.lock").length > 0){
+	// 				$(".modify.comment").hide();
+	// 			}
+	// 			if($(".program.lock").length > 0){
+	// 				$(".modify.program").hide();
+	// 			}
+	// 		}
+	// 	});
 
-		count = $("#rc_leader option").length;
-		for( var i = 0; i < count; i++){
-			$("#rc_leader").get(0).options[i].selected = false;
-		}
-		count = $("#rc_responsibility option").length;
-		for( var i = 0; i < count; i++){
-			$("#rc_responsibility").get(0).options[i].selected = false;
-		}
-		count = $("#rc_assistant option").length;
-		for( var i = 0; i < count; i++){
-			$("#rc_assistant").get(0).options[i].selected = false;
-		}
-		count = $("#rc_7 option").length;
-		for( var i = 0; i < count; i++){
-			$("#rc_7").get(0).options[i].selected = false;
-		}
-		count = $("#rc_11 option").length;
-		for( var i = 0; i < count; i++){
-			$("#rc_11").get(0).options[i].selected = false;
-		}
-		modal.find('.modal-title').text(cid);
-		$.post("getFixedTable.php",{index:cid},function(data){
-			$("#rc_3").val(data[0]);
-			count = $("#rc_leader option").length;
-			$.each(data[1],function(key,value){
-				value = value + ";";
-				for( var i = 0; i < count; i++){
-					if($("#rc_leader").get(0).options[i].text == value){
-						$("#rc_leader").get(0).options[i].selected = true;
-						break;
-					}
-				}
-			});
-			count = $("#rc_responsibility option").length;
-			$.each(data[2],function(key,value){
-				value = value + ";";
-				for( var i = 0; i < count; i++){
-					if($("#rc_responsibility").get(0).options[i].text == value){
-						$("#rc_responsibility").get(0).options[i].selected = true;
-						break;
-					}
-				}
-			});
-			count = $("#rc_assistant option").length;
-			$.each(data[3],function(key,value){
-				value = value + ";";
-				for( var i = 0; i < count; i++){
-					if($("#rc_assistant").get(0).options[i].text == value){
-						$("#rc_assistant").get(0).options[i].selected = true;
-						break;
-					}
-				}
-			});
-			count = $("#rc_7 option").length;
-			value = data[4];
-			for( var i = 0; i < count; i++){
-				if($("#rc_7").get(0).options[i].text == value){
-					$("#rc_7").get(0).options[i].selected = true;
-					break;
-				}
-			}
-			$("#rc_8").val(data[5]);
-			$("#rc_9").val(data[6]);
-			$("#rc_10").val(data[7]);
-			count = $("#rc_11 option").length;
-			value = data[8];
-			for( var i = 0; i < count; i++){
-				if($("#rc_11").get(0).options[i].text == value){
-					$("#rc_11").get(0).options[i].selected = true;
-					break;
-				}
-			}
-		},'json');
-	});
+	// 	count = $("#rc_leader option").length;
+	// 	for( var i = 0; i < count; i++){
+	// 		$("#rc_leader").get(0).options[i].selected = false;
+	// 	}
+	// 	count = $("#rc_responsibility option").length;
+	// 	for( var i = 0; i < count; i++){
+	// 		$("#rc_responsibility").get(0).options[i].selected = false;
+	// 	}
+	// 	count = $("#rc_assistant option").length;
+	// 	for( var i = 0; i < count; i++){
+	// 		$("#rc_assistant").get(0).options[i].selected = false;
+	// 	}
+	// 	count = $("#rc_7 option").length;
+	// 	for( var i = 0; i < count; i++){
+	// 		$("#rc_7").get(0).options[i].selected = false;
+	// 	}
+	// 	count = $("#rc_11 option").length;
+	// 	for( var i = 0; i < count; i++){
+	// 		$("#rc_11").get(0).options[i].selected = false;
+	// 	}
+	// 	modal.find('.modal-title').text(cid);
+	// 	$.post("getFixedTable.php",{index:cid},function(data){
+	// 		$("#rc_3").val(data[0]);
+	// 		count = $("#rc_leader option").length;
+	// 		$.each(data[1],function(key,value){
+	// 			value = value + ";";
+	// 			for( var i = 0; i < count; i++){
+	// 				if($("#rc_leader").get(0).options[i].text == value){
+	// 					$("#rc_leader").get(0).options[i].selected = true;
+	// 					break;
+	// 				}
+	// 			}
+	// 		});
+	// 		count = $("#rc_responsibility option").length;
+	// 		$.each(data[2],function(key,value){
+	// 			value = value + ";";
+	// 			for( var i = 0; i < count; i++){
+	// 				if($("#rc_responsibility").get(0).options[i].text == value){
+	// 					$("#rc_responsibility").get(0).options[i].selected = true;
+	// 					break;
+	// 				}
+	// 			}
+	// 		});
+	// 		count = $("#rc_assistant option").length;
+	// 		$.each(data[3],function(key,value){
+	// 			value = value + ";";
+	// 			for( var i = 0; i < count; i++){
+	// 				if($("#rc_assistant").get(0).options[i].text == value){
+	// 					$("#rc_assistant").get(0).options[i].selected = true;
+	// 					break;
+	// 				}
+	// 			}
+	// 		});
+	// 		count = $("#rc_7 option").length;
+	// 		value = data[4];
+	// 		for( var i = 0; i < count; i++){
+	// 			if($("#rc_7").get(0).options[i].text == value){
+	// 				$("#rc_7").get(0).options[i].selected = true;
+	// 				break;
+	// 			}
+	// 		}
+	// 		$("#rc_8").val(data[5]);
+	// 		$("#rc_9").val(data[6]);
+	// 		$("#rc_10").val(data[7]);
+	// 		count = $("#rc_11 option").length;
+	// 		value = data[8];
+	// 		for( var i = 0; i < count; i++){
+	// 			if($("#rc_11").get(0).options[i].text == value){
+	// 				$("#rc_11").get(0).options[i].selected = true;
+	// 				break;
+	// 			}
+	// 		}
+	// 	},'json');
+	// });
 	$("#exportModal").on('show.bs.modal',function(event){
 		var sel_year = $("select#year_a").find("option:selected").text();
 		var modal = $(this);

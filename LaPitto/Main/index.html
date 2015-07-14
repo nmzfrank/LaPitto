@@ -149,11 +149,26 @@
           <h4 class="modal-title" id="myModalLabel">修改会议</h4>
         </div>
         <div class="modal-body">
-          <div class="super">拟办意见：&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="rc_3"></textarea></div>
-          <div class="super">牵头校领导：<select size=3 multiple="multiple" id="rc_leader"></select>（按住ctrl键进行多选）</div>
-          <div class="super">牵头单位：&nbsp;&nbsp;&nbsp;<select size=3 multiple="multiple" id="rc_responsibility"></select>（按住ctrl键进行多选）</div>
-          <div class="super">协助单位：&nbsp;&nbsp;&nbsp;<select size="3" multiple="multiple" id="rc_assistant"></select>（按住ctrl键进行多选）</div>
-          <div class="super">落实状态：&nbsp;&nbsp;
+          <div class="super pull-left" style="width:15%">拟办意见：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="rc_3"></textarea>
+          </div>
+          <div class="clearfix"></div>
+
+          <div class="super pull-left" style="width:15%">牵头校领导：</div>
+          <div class="pull-left" id="rc_leader"></div>
+          <div class="clearfix"></div>
+
+          <div class="super pull-left" style="width:15%">牵头单位：</div>
+          <div class="pull-left" id="rc_responsibility"></div>
+          <div class="clearfix"></div>
+
+          <div class="super pull-left" style="width:15%">协助单位：</div>
+          <div class="pull-left" id="rc_assistant"></div>
+          <div class="clearfix"></div>
+
+          <div class="super pull-left" style="width:15%">落实状态：</div>
+          <div class="pull-left">
             <select id="rc_7">
               <option>暂无</option>
               <option>开始推进</option>
@@ -164,10 +179,26 @@
               <option>已完成</option>
             </select>
           </div>
-          <div class="super">备注：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="rc_8"></textarea></div>
-          <div class="comment modify">落实备注：&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="rc_9"></textarea></div>
-          <div class="program modify">节点计划：&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="rc_10"></textarea></div>
-          <div class="self modify">进度自评：&nbsp;&nbsp;
+          <div class="clearfix"></div>
+
+          <div class="super pull-left" style="width:15%">备注：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="rc_8"></textarea>
+          </div>
+          <div class="clearfix"></div>
+
+          <div class="comment modify pull-left" style="width:15%">落实备注：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="rc_9"></textarea>
+          </div>
+          <div class="clearfix"></div>
+          <div class="program modify pull-left" style="width:15%">节点计划：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="rc_10"></textarea>
+          </div>
+          <div class="clearfix"></div>
+          <div class="self modify pull-left" style="width:15%">进度自评：</div>
+          <div class="pull-left">
             <select id="rc_11">
               <option>暂无</option>
               <option>开始推进</option>
@@ -178,6 +209,7 @@
               <option>已完成</option>
             </select>
           </div>
+          <div class="clearfix"></div>
 
         </div>
         <div class="modal-footer">
