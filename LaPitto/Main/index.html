@@ -99,14 +99,39 @@
           <h4 class="modal-title" id="myModalLabel">添加会议</h4>
         </div>
         <div class="modal-body">
-          <div>年份：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="ac_year" class="yearList"></select></div>
-          <div>会议编号：&nbsp;&nbsp;&nbsp;<input type="text" id="vc_meeting"/></div>
-          <div>议题：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="ac_1"/></div>
-          <div>拟办意见：&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="ac_3"></textarea></div>
-          <div>牵头校领导：<select size=3 multiple="multiple" id="ac_leader"></select>（按住ctrl键进行多选）</div>
-          <div>牵头单位：&nbsp;&nbsp;&nbsp;<select size=3 multiple="multiple" id="ac_responsibility"></select>（按住ctrl键进行多选）</div>
-          <div>协助单位：&nbsp;&nbsp;&nbsp;<select size="3" multiple="multiple" id="ac_assistant"></select>（按住ctrl键进行多选）</div>
-          <div>落实状态：&nbsp;&nbsp;
+          <div class="pull-left" style="width:15%">年份：</div>
+          <div class="pull-left">
+            <select id="ac_year" class="yearList"></select>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">会议编号：</div>
+          <div class="pull-left">
+            <input type="text" id="vc_meeting"/>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">议题：</div>
+          <div class="pull-left">
+            <input type="text" id="ac_1"/>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">拟办意见：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="ac_3"></textarea>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">牵头校领导：</div>
+          <div class="pull-left" id="ac_leader"></div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">牵头单位：</div>
+          <div class="pull-left" id="ac_responsibility">
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">协助单位：</div>
+          <div class="pull-left" id="ac_assistant">
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">落实状态：</div>
+          <div class="pull-left">
             <select id="ac_7">
               <option>暂无</option>
               <option>开始推进</option>
@@ -117,10 +142,24 @@
               <option>已完成</option>
             </select>
           </div>
-          <div>备注：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="ac_8"></textarea></div>
-          <div>落实备注：&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="ac_9"></textarea></div>
-          <div>节点计划：&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="ac_10"></textarea></div>
-          <div>进度自评：&nbsp;&nbsp;
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">备注：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="ac_8"></textarea>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">落实备注：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="ac_9"></textarea>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">节点计划：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="ac_10"></textarea>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">进度自评：</div>
+          <div class="pull-left">
             <select id="ac_11">
               <option>暂无</option>
               <option>开始推进</option>
@@ -131,6 +170,7 @@
               <option>已完成</option>
             </select>
           </div>
+          <div class="clearfix"></div>
 
         </div>
         <div class="modal-footer">
@@ -140,6 +180,7 @@
       </div>
     </div>
   </div>
+
 
   <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -219,6 +260,9 @@
       </div>
     </div>
   </div>
+
+
+
   <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

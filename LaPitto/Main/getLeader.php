@@ -10,6 +10,7 @@
 		
 	$check_query = mysql_query("SELECT * FROM users WHERE users.usage = 1");
 	$count = 0;
+	echo("<div class='btn-group' role='group'>");
 	while($result = mysql_fetch_array($check_query)){
 		$count = $count + 1;
 		if($count == 5){
@@ -17,7 +18,8 @@
 			echo("<div class='btn-group' role='group'>");
 			$count = 0;
 		}
-		echo("<button type='button' class='btn btn-danger' style='margin:5px'>".$result['cn_name']."</button>");
+		$name = $result['cn_name'];
+		echo("<button type='button' class='btn btn-danger multiselect' style='margin:5px' data-name='$name'>".$name."<span class='hidden'>;</span></button>");
 	}
 	echo('</div>');
 ?>

@@ -91,7 +91,7 @@ function showYearList(){
 }
 
 function showLeaderList(){
-	var ac = $("select#ac_leader")
+	var ac = $("#ac_leader")
 	$.post("getLeader.php",
 	{
 	},
@@ -108,7 +108,7 @@ function showLeaderList(){
 }
 
 function showAssistantList(){
-	var ac = $("select#ac_assistant")
+	var ac = $("#ac_assistant")
 	$.post("getAssistant.php",{},
 	function(data,status){
 		ac.append(data)
@@ -121,7 +121,7 @@ function showAssistantList(){
 }
 
 function showResponsibility(){
-	var ac = $("select#ac_responsibility")
+	var ac = $("#ac_responsibility")
 	$.post("getResponsibility.php",
 	{
 	},
@@ -298,6 +298,15 @@ $(document).ready(function(){
 		$("input[name='level'][value='2']").attr('checked','true');
 		relo();
 	});
+
+	$(document).on("click",".btn.btn-danger.multiselect",function(){
+		$(this).attr("class","btn btn-success multiselect");
+	});
+
+	$(document).on("click",".btn.btn-success.multiselect",function(){
+		$(this).attr("class","btn btn-danger multiselect");
+	});
+
 	$(document).on("click",".lockComment",function(){
 		var str = new String();
 		var arr = new Array();
@@ -400,11 +409,14 @@ $(document).ready(function(){
 		var comment_b = modal.find("#rc_8").val();
 		var comment_a = modal.find("#rc_9").val();
 		var program = modal.find("#rc_10").val();
-		var leader = modal.find("#rc_leader").find("option:selected").text();
-		var responsibility = modal.find("#rc_responsibility").find("option:selected").text();
-		var assistant = modal.find("#rc_assistant").find("option:selected").text();
+		var leader = modal.find("#rc_leader").find(".btn-success").text();
+		var responsibility = modal.find("#rc_responsibility").find(".btn-success").text();
+		var assistant = modal.find("#rc_assistant").find(".btn-success").text();
 		var status = modal.find("#rc_7").find("option:selected").text();
 		var self_status = modal.find("#rc_11").find("option:selected").text();
+		var leader;
+		var responsibility;
+		var assistant;
 		$.post("redraftContent.php",{
 			"index":index,
 			"opinion_a":opinion_a,
@@ -421,104 +433,78 @@ $(document).ready(function(){
 		});
 		$("#modifyModal").modal('hide');
 	});
-	// $("#modifyModal").on('show.bs.modal',function(event){
-	// 	var button = $(event.relatedTarget);
-	// 	var cid = button.data('cid');
-	// 	var modal = $(this);
-	// 	var count;
-	// 	var is_super;
-	// 	$.post("load.php",function(user){
-	// 		if(user == "管理员"){
-	// 			is_super = 1;
-	// 		} else{
-	// 			is_super = 0;
-	// 			$(".super").hide();
-	// 			if($(".self.lock").length > 0){
-	// 				$(".modify.self").hide();
-	// 			}
-	// 			if($(".comment.lock").length > 0){
-	// 				$(".modify.comment").hide();
-	// 			}
-	// 			if($(".program.lock").length > 0){
-	// 				$(".modify.program").hide();
-	// 			}
-	// 		}
-	// 	});
 
-	// 	count = $("#rc_leader option").length;
-	// 	for( var i = 0; i < count; i++){
-	// 		$("#rc_leader").get(0).options[i].selected = false;
-	// 	}
-	// 	count = $("#rc_responsibility option").length;
-	// 	for( var i = 0; i < count; i++){
-	// 		$("#rc_responsibility").get(0).options[i].selected = false;
-	// 	}
-	// 	count = $("#rc_assistant option").length;
-	// 	for( var i = 0; i < count; i++){
-	// 		$("#rc_assistant").get(0).options[i].selected = false;
-	// 	}
-	// 	count = $("#rc_7 option").length;
-	// 	for( var i = 0; i < count; i++){
-	// 		$("#rc_7").get(0).options[i].selected = false;
-	// 	}
-	// 	count = $("#rc_11 option").length;
-	// 	for( var i = 0; i < count; i++){
-	// 		$("#rc_11").get(0).options[i].selected = false;
-	// 	}
-	// 	modal.find('.modal-title').text(cid);
-	// 	$.post("getFixedTable.php",{index:cid},function(data){
-	// 		$("#rc_3").val(data[0]);
-	// 		count = $("#rc_leader option").length;
-	// 		$.each(data[1],function(key,value){
-	// 			value = value + ";";
-	// 			for( var i = 0; i < count; i++){
-	// 				if($("#rc_leader").get(0).options[i].text == value){
-	// 					$("#rc_leader").get(0).options[i].selected = true;
-	// 					break;
-	// 				}
-	// 			}
-	// 		});
-	// 		count = $("#rc_responsibility option").length;
-	// 		$.each(data[2],function(key,value){
-	// 			value = value + ";";
-	// 			for( var i = 0; i < count; i++){
-	// 				if($("#rc_responsibility").get(0).options[i].text == value){
-	// 					$("#rc_responsibility").get(0).options[i].selected = true;
-	// 					break;
-	// 				}
-	// 			}
-	// 		});
-	// 		count = $("#rc_assistant option").length;
-	// 		$.each(data[3],function(key,value){
-	// 			value = value + ";";
-	// 			for( var i = 0; i < count; i++){
-	// 				if($("#rc_assistant").get(0).options[i].text == value){
-	// 					$("#rc_assistant").get(0).options[i].selected = true;
-	// 					break;
-	// 				}
-	// 			}
-	// 		});
-	// 		count = $("#rc_7 option").length;
-	// 		value = data[4];
-	// 		for( var i = 0; i < count; i++){
-	// 			if($("#rc_7").get(0).options[i].text == value){
-	// 				$("#rc_7").get(0).options[i].selected = true;
-	// 				break;
-	// 			}
-	// 		}
-	// 		$("#rc_8").val(data[5]);
-	// 		$("#rc_9").val(data[6]);
-	// 		$("#rc_10").val(data[7]);
-	// 		count = $("#rc_11 option").length;
-	// 		value = data[8];
-	// 		for( var i = 0; i < count; i++){
-	// 			if($("#rc_11").get(0).options[i].text == value){
-	// 				$("#rc_11").get(0).options[i].selected = true;
-	// 				break;
-	// 			}
-	// 		}
-	// 	},'json');
-	// });
+	$("#modifyModal").on('show.bs.modal',function(event){
+		var button = $(event.relatedTarget);
+		var cid = button.data('cid');
+		var modal = $(this);
+		var count;
+		var is_super;
+		$.post("load.php",function(user){
+			if(user == "管理员"){
+				is_super = 1;
+			} else{
+				is_super = 0;
+				$(".super").hide();
+				if($(".self.lock").length > 0){
+					$(".modify.self").hide();
+				}
+				if($(".comment.lock").length > 0){
+					$(".modify.comment").hide();
+				}
+				if($(".program.lock").length > 0){
+					$(".modify.program").hide();
+				}
+			}
+		});
+
+
+		count = $("#rc_7 option").length;
+		for( var i = 0; i < count; i++){
+			$("#rc_7").get(0).options[i].selected = false;
+		}
+		count = $("#rc_11 option").length;
+		for( var i = 0; i < count; i++){
+			$("#rc_11").get(0).options[i].selected = false;
+		}
+		modal.find('.modal-title').text(cid);
+
+		$("#modifyModal").find("button[data-name]").attr("class","btn btn-danger multiselect");
+
+		$.post("getFixedTable.php",{index:cid},function(data){
+			$("#rc_3").val(data[0]);
+			
+			$.each(data[1],function(key,value){
+				$("#rc_leader").find("button[data-name='"+value+"']").attr("class","btn btn-success multiselect");
+			});
+			
+			$.each(data[2],function(key,value){
+				$("#rc_responsibility").find("button[data-name='"+value+"']").attr("class","btn btn-success multiselect");
+			});
+			$.each(data[3],function(key,value){
+				$("#rc_assistant").find("button[data-name='"+value+"']").attr("class","btn btn-success multiselect");
+			});
+			count = $("#rc_7 option").length;
+			value = data[4];
+			for( var i = 0; i < count; i++){
+				if($("#rc_7").get(0).options[i].text == value){
+					$("#rc_7").get(0).options[i].selected = true;
+					break;
+				}
+			}
+			$("#rc_8").val(data[5]);
+			$("#rc_9").val(data[6]);
+			$("#rc_10").val(data[7]);
+			count = $("#rc_11 option").length;
+			value = data[8];
+			for( var i = 0; i < count; i++){
+				if($("#rc_11").get(0).options[i].text == value){
+					$("#rc_11").get(0).options[i].selected = true;
+					break;
+				}
+			}
+		},'json');
+	});
 	$("#exportModal").on('show.bs.modal',function(event){
 		var sel_year = $("select#year_a").find("option:selected").text();
 		var modal = $(this);

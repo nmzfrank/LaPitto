@@ -18,7 +18,8 @@
 			echo("<div class='btn-group' role='group'>");
 			$count = 0;
 		}
-		echo("<button type='button' class='btn btn-danger' style='margin:5px'>".$result['cn_name']."</button>");
+		$name = $result['cn_name'];
+		echo("<button type='button' class='btn btn-danger multiselect' style='margin:5px' data-name='$name'>".$result['cn_name']."<span class='hidden'>;</span></button>");
 	}
 	echo('</div>');
 ?>
