@@ -49,7 +49,7 @@ function load(){
 	relo();
 	$(".lv-meeting").show();
 	$(".panel-heading").show();
-	$(".panel-body").hide();
+	$(".content-table").hide();
 }
 function relo(){
 	var tb = document.getElementById("MainTable")
@@ -65,14 +65,15 @@ function relo(){
 
 	var sel_year = $("select#year_a").find("option:selected").text()
 	var sel_level = $("input[name='level']:checked").val()
-	
+	var status = $("#statusList").find("option:selected").text()
+	var self_status = $("#selfStatusList").find("option:selected").text()
 
 	$.ajax({
 		type: "POST",
 		url: "reloadTable.php",
 		cache:false,
 		async:false,
-		data:"level="+sel_level+"&year="+sel_year, 
+		data:"level="+sel_level+"&year="+sel_year+"&status="+status+"&self_status"+self_status, 
 		success: function(xmlobj){
 			line = xmlobj
 		}
@@ -270,19 +271,39 @@ $(document).ready(function(){
 		if (sel_level == 1){
 			$(".lv-meeting").show();
 			$(".panel-heading").hide();
-			$(".panel-body").hide();
+			$(".content-table").hide();
 		}
 		if (sel_level == 2){
 			$(".lv-meeting").show();
 			$(".panel-heading").show();
-			$(".panel-body").hide();
+			$(".content-table").hide();
 		}
 		if (sel_level == 3){
 			$(".lv-meeting").show();
 			$(".panel-heading").show();
-			$(".panel-body").show();
+			$(".content-table").show();
 		}
 	});
+
+	$("select#statusList").on("change",function(){
+		var status = $(this).find("option:selected").text();
+		if(status != "全选"){
+			$(".vc_7[data-content!='"+status+"']").parentsUntil("tbody").hide();
+			$(".vc_7[data-content='"+status+"']").parentsUntil("tbody").show();
+		} else{
+			location.reload();
+		}
+	})
+
+	$("select#selfStatusList").on("change",function(){
+		var self_status = $(this).find("option:selected").text();
+		if(self_status != "全选"){
+			$(".self_status[data-content!='"+self_status+"']").parentsUntil("tbody").hide();
+			$(".self_status[data-content='"+self_status+"']").parentsUntil("tbody").show();
+		} else{
+			location.reload();
+		}
+	})
 
 	$(document).on('click','.lv-meeting',function(){
 		var event_bar = $(this).siblings('.lv-event');
@@ -290,7 +311,7 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click',".panel-heading",function(){
-		$(this).siblings('.panel-body').toggle();
+		$(this).siblings('.content-table').toggle();
 	});
 	
 	$('#logout').on('click',function(){
@@ -299,9 +320,16 @@ $(document).ready(function(){
 		})
 	});
 
-	$("#year_a").on("click",function(){
-		$("input[name='level'][value='2']").attr('checked','true');
+	$("#year_a").on("click",{},function(){
 		relo();
+		$.post('checkAuth.php',function(){
+			$("input[name='level'][value='1']").attr('checked',false);
+			$("input[name='level'][value='2']").attr('checked','true');
+			$("input[name='level'][value='3']").attr('checked',false);
+		})
+		$(".lv-meeting").show();
+		$(".panel-heading").show();
+		$(".content-table").hide();
 	});
 
 	$(document).on("click",".btn.btn-danger.multiselect",function(){
