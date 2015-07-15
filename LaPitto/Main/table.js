@@ -91,14 +91,14 @@ function showYearList(){
 }
 
 function showLeaderList(){
-	var ac = $("select#ac_leader")
+	var ac = $("#ac_leader")
 	$.post("getLeader.php",
 	{
 	},
 	function(data,status){
 		ac.append(data)
 	})
-	var rc = $("select#rc_leader")
+	var rc = $("#rc_leader")
 	$.post("getLeader.php",
 	{
 	},
@@ -108,12 +108,12 @@ function showLeaderList(){
 }
 
 function showAssistantList(){
-	var ac = $("select#ac_assistant")
+	var ac = $("#ac_assistant")
 	$.post("getAssistant.php",{},
 	function(data,status){
 		ac.append(data)
 	})
-	var rc = $("select#rc_assistant")
+	var rc = $("#rc_assistant")
 	$.post("getAssistant.php",{},
 	function(data,status){
 		rc.append(data)
@@ -121,14 +121,14 @@ function showAssistantList(){
 }
 
 function showResponsibility(){
-	var ac = $("select#ac_responsibility")
+	var ac = $("#ac_responsibility")
 	$.post("getResponsibility.php",
 	{
 	},
 	function(data,status){
 		ac.append(data)
 	})
-	var rc = $("select#rc_responsibility")
+	var rc = $("#rc_responsibility")
 	$.post("getResponsibility.php",
 	{
 	},
@@ -260,11 +260,6 @@ $(document).ready(function(){
 		}
 	});
 
-	$(window).unload(function(){
-		$.post('destroySession.php',function(data){
-		})
-	});
-
 	$("input[name='level']").on('click',function(){
 		var sel_level = $("input[name='level']:checked").val()
 		if (sel_level == 1){
@@ -303,6 +298,15 @@ $(document).ready(function(){
 		$("input[name='level'][value='2']").attr('checked','true');
 		relo();
 	});
+
+	$(document).on("click",".btn.btn-danger.multiselect",function(){
+		$(this).attr("class","btn btn-success multiselect");
+	});
+
+	$(document).on("click",".btn.btn-success.multiselect",function(){
+		$(this).attr("class","btn btn-danger multiselect");
+	});
+
 	$(document).on("click",".lockComment",function(){
 		var str = new String();
 		var arr = new Array();
@@ -405,11 +409,14 @@ $(document).ready(function(){
 		var comment_b = modal.find("#rc_8").val();
 		var comment_a = modal.find("#rc_9").val();
 		var program = modal.find("#rc_10").val();
-		var leader = modal.find("#rc_leader").find("option:selected").text();
-		var responsibility = modal.find("#rc_responsibility").find("option:selected").text();
-		var assistant = modal.find("#rc_assistant").find("option:selected").text();
+		var leader = modal.find("#rc_leader").find(".btn-success").text();
+		var responsibility = modal.find("#rc_responsibility").find(".btn-success").text();
+		var assistant = modal.find("#rc_assistant").find(".btn-success").text();
 		var status = modal.find("#rc_7").find("option:selected").text();
 		var self_status = modal.find("#rc_11").find("option:selected").text();
+		var leader;
+		var responsibility;
+		var assistant;
 		$.post("redraftContent.php",{
 			"index":index,
 			"opinion_a":opinion_a,
@@ -426,6 +433,7 @@ $(document).ready(function(){
 		});
 		$("#modifyModal").modal('hide');
 	});
+
 	$("#modifyModal").on('show.bs.modal',function(event){
 		var button = $(event.relatedTarget);
 		var cid = button.data('cid');
@@ -450,18 +458,7 @@ $(document).ready(function(){
 			}
 		});
 
-		count = $("#rc_leader option").length;
-		for( var i = 0; i < count; i++){
-			$("#rc_leader").get(0).options[i].selected = false;
-		}
-		count = $("#rc_responsibility option").length;
-		for( var i = 0; i < count; i++){
-			$("#rc_responsibility").get(0).options[i].selected = false;
-		}
-		count = $("#rc_assistant option").length;
-		for( var i = 0; i < count; i++){
-			$("#rc_assistant").get(0).options[i].selected = false;
-		}
+
 		count = $("#rc_7 option").length;
 		for( var i = 0; i < count; i++){
 			$("#rc_7").get(0).options[i].selected = false;
@@ -471,37 +468,21 @@ $(document).ready(function(){
 			$("#rc_11").get(0).options[i].selected = false;
 		}
 		modal.find('.modal-title').text(cid);
+
+		$("#modifyModal").find("button[data-name]").attr("class","btn btn-danger multiselect");
+
 		$.post("getFixedTable.php",{index:cid},function(data){
 			$("#rc_3").val(data[0]);
-			count = $("#rc_leader option").length;
+			
 			$.each(data[1],function(key,value){
-				value = value + ";";
-				for( var i = 0; i < count; i++){
-					if($("#rc_leader").get(0).options[i].text == value){
-						$("#rc_leader").get(0).options[i].selected = true;
-						break;
-					}
-				}
+				$("#rc_leader").find("button[data-name='"+value+"']").attr("class","btn btn-success multiselect");
 			});
-			count = $("#rc_responsibility option").length;
+			
 			$.each(data[2],function(key,value){
-				value = value + ";";
-				for( var i = 0; i < count; i++){
-					if($("#rc_responsibility").get(0).options[i].text == value){
-						$("#rc_responsibility").get(0).options[i].selected = true;
-						break;
-					}
-				}
+				$("#rc_responsibility").find("button[data-name='"+value+"']").attr("class","btn btn-success multiselect");
 			});
-			count = $("#rc_assistant option").length;
 			$.each(data[3],function(key,value){
-				value = value + ";";
-				for( var i = 0; i < count; i++){
-					if($("#rc_assistant").get(0).options[i].text == value){
-						$("#rc_assistant").get(0).options[i].selected = true;
-						break;
-					}
-				}
+				$("#rc_assistant").find("button[data-name='"+value+"']").attr("class","btn btn-success multiselect");
 			});
 			count = $("#rc_7 option").length;
 			value = data[4];

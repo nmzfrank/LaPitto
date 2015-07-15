@@ -14,13 +14,54 @@
 		die('Could not connect: ' . mysql_error());	
 	getMeeting($u_ID,$year,$level);
 	
+	function getMeetingCompletion($mid){
+		$completion = 0.0;
+		$completion_t = 0.0;
+		$count = 0;
+		$query = mysql_query("select distinct content.status as status from content inner join event on content.e_ID = event.e_ID where event.m_ID = '$mid'");
+		while($ans = mysql_fetch_array($query)){
+			$status = intval($ans['status']);
+			$count = $count + 1;
+			$completion = $completion + $status;
+			if($status == 100){
+				$completion_t = $completion_t + 1.0;
+			}
+		}
+		$completion = round( $completion / $count , 3);
+		$completion_t = round($completion_t * 100 / $count , 3);
+		$result[0] = $completion;
+		$result[1] = $completion_t;
+		return $result;
+	}
+
+	function getEventCompletion($eid){
+		$completion = 0.0;
+		$completion_t = 0.0;
+		$count = 0;
+		$query = mysql_query("select distinct content.status as status from content where content.e_ID = '$eid'");
+		while($ans = mysql_fetch_array($query)){
+			$status = intval($ans['status']);
+			$count = $count + 1;
+			$completion = $completion + $status;
+			if($status == 100){
+				$completion_t = $completion_t + 1.0;
+			}
+		}
+		$completion = round( $completion / $count , 3);
+		$completion_t = round($completion_t * 100 / $count , 3);
+		$result[0] = $completion;
+		$result[1] = $completion_t;
+		return $result;
+	}
 	
 	function getMeeting($u_ID, $year, $level){
-		$query = mysql_query("select distinct meeting.meeting from content, event, content_user, meeting where content_user.u_ID = '$u_ID' and content_user.c_ID = content.c_ID and content.e_ID = event.e_ID and event.m_ID = meeting.m_ID and meeting.year = '$year' order by meeting.meeting asc");
+		$query = mysql_query("select distinct meeting.meeting,meeting.m_ID from content, event, content_user, meeting where content_user.u_ID = '$u_ID' and content_user.c_ID = content.c_ID and content.e_ID = event.e_ID and event.m_ID = meeting.m_ID and meeting.year = '$year' order by meeting.meeting asc");
 		while($ans = mysql_fetch_array($query)){
+			$result = getMeetingCompletion($ans['m_ID']);
+			$mid = $ans['m_ID'];
 			echo("<tr>");
 			echo("<td><div class='container-fluid'><div class='row'>");
-			echo("<div class='col-lg-12 lv-meeting' style='background-color:rgb(128,185,188); border-radius:0.5em; padding:5px;'><span style='font-size:1.5em;'>".$year."-第".$ans['meeting']."次校长办公会"."</span></div>");
+			echo("<div class='col-lg-12 lv-meeting' style='background-color:rgb(128,185,188); border-radius:0.5em; padding:5px;'><span style='font-size:1.5em;'>".$year."-第".$ans['meeting']."次校长办公会"."</span><span class='pull-right' style='padding:5px;'>实际完成率：$result[0]%;&nbsp;&nbsp;&nbsp;参考完成率: $result[1]%;</span></div>");
 			getEvent($ans['meeting'],$u_ID,$level);
 			echo("</div></div></td>");
 			echo("</tr>");
@@ -30,9 +71,10 @@
 	function getEvent($meeting, $u_ID,$level){
 		$query = mysql_query("select distinct content.e_ID, event.content from content, event, content_user, meeting where content_user.u_ID = '$u_ID' and content_user.c_ID = content.c_ID and content.e_ID = event.e_ID and event.m_ID = meeting.m_ID and meeting.meeting = '$meeting' order by content.e_ID asc");
 		while($ans = mysql_fetch_array($query)){
+			$result = getEventCompletion($ans['e_ID']);
 			echo("<div class='col-lg-12 lv-event'>");
 			echo("<div class='panel panel-success' style='margin-top:10px;'>");
-			echo("<div class='panel-heading'>议题： ".$ans['content']."</div>");
+			echo("<div class='panel-heading' style='font-size:2em'>议题： ".$ans['content']."<span class='pull-right' style='font-size:0.5em; padding-top:10px;'>实际完成率：$result[0]%;&nbsp;&nbsp;&nbsp;参考完成率: $result[1]%;</span></div>");
 			echo("<div class='panel-body'>");
 			getContent($ans['e_ID'], $u_ID);
 			echo("</div></div></div>");
@@ -40,6 +82,7 @@
 	}
 	
 	function getContent($e_ID, $u_ID){
+		
 		$status_dict = array();
 		$dict_query = mysql_query("select * from status_tran");
 		while($dict_ans = mysql_fetch_array($dict_query)){
@@ -138,31 +181,6 @@
 				    	echo("<option selected='selected'>推进中Ⅲ</option>");
 				   	}else{
 				   		echo("<option>推进中Ⅲ</option>");
-				   	}
-				   	if($status_dict[$ans['self_status']] == "推进中Ⅳ"){
-				    	echo("<option selected='selected'>推进中Ⅳ</option>");
-				   	}else{
-				   		echo("<option>推进中Ⅳ</option>");
-				   	}
-				   	if($status_dict[$ans['self_status']] == "推进中Ⅴ"){
-				    	echo("<option selected='selected'>推进中Ⅴ</option>");
-				   	}else{
-				   		echo("<option>推进中Ⅴ</option>");
-				   	}
-				   	if($status_dict[$ans['self_status']] == "推进中Ⅵ"){
-				    	echo("<option selected='selected'>推进中Ⅵ</option>");
-				   	}else{
-				   		echo("<option>推进中Ⅵ</option>");
-				   	}
-				   	if($status_dict[$ans['self_status']] == "推进中Ⅶ"){
-				    	echo("<option selected='selected'>推进中Ⅶ</option>");
-				   	}else{
-				   		echo("<option>推进中Ⅶ</option>");
-				   	}
-				   	if($status_dict[$ans['self_status']] == "推进中Ⅶ"){
-				    	echo("<option selected='selected'>推进中Ⅶ</option>");
-				   	}else{
-				   		echo("<option>推进中Ⅶ</option>");
 				   	}
 				   	if($status_dict[$ans['self_status']] == "基本完成"){
 				    	echo("<option selected='selected'>基本完成</option>");
