@@ -23,7 +23,7 @@ function load(){
 		async:false,
 		success: function(xmlobj){
 			cur = xmlobj
-			$("div.title").html("校长办公室督办系统 - 当前用户："+xmlobj)
+			$("div.title").replaceWith("<div class='title navbar-text navbar-right' style='margin-right:0px;padding-left:5px;padding-right:5px'>校长办公室督办系统 - 当前用户："+xmlobj+"</div>" )
 		}
 	});
 	
@@ -54,7 +54,12 @@ function load(){
 function relo(){
 	var tb = document.getElementById("MainTable")
 	str = "<tr>\
-        	<td colspan=\"12\"><div style=\"margin:5px\">校长办公会</div></td>\
+        	<td colspan=\"12\"><div class='pull-left' style=\"margin:5px\">校长办公会</div>\
+        	<span class='admin'>\
+          		<button type=\"button\" class=\"btn btn-info pull-right\" data-toggle=\"modal\" data-target=\"#myModal\">添加内容</button>\
+        	</span>\
+        	<div class='clearfix'></div>\
+        	</td>\
         </tr>" 
 	line = "undefined"
 
