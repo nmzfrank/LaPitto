@@ -8,9 +8,18 @@
 	if(!mysql_select_db('LaPitto', $con))
 		die('Could not connect: ' . mysql_error());
 		
-	$check_query = mysql_query("SELECT * FROM users");
+	$check_query = mysql_query("SELECT * FROM users WHERE users.usage = 1");
+	$count = 0;
+	echo("<div class='btn-group' role='group'>");
 	while($result = mysql_fetch_array($check_query)){
-		if($result['usage']==1)
-			echo("<option>".$result['cn_name'].';'."</option>");
+		$count = $count + 1;
+		if($count == 5){
+			echo("</div></br>");
+			echo("<div class='btn-group' role='group'>");
+			$count = 0;
+		}
+		$name = $result['cn_name'];
+		echo("<button type='button' class='btn btn-danger multiselect' style='margin:5px' data-name='$name'>".$name."<span class='hidden'>;</span></button>");
 	}
+	echo('</div>');
 ?>

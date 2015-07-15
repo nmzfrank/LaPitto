@@ -19,19 +19,19 @@
 	$result = mysql_fetch_array($check);
 	$c_ID = $result['c_ID'];
 	
-	$check = mysql_query("select * from users, content_user where users.usage = 1 and content_user.c_ID = '$c_ID' and content_user.u_ID = users.u_ID and content_user.usage = 7");
+	$check = mysql_query("SELECT users.cn_name FROM users JOIN content_user on users.u_ID = content_user.u_ID where users.usage = 1 and content_user.c_ID = '$c_ID' and content_user.usage = 7");
 	$larr = array();
 	while($leader = mysql_fetch_array($check)){
 		$larr[] = $leader['cn_name'];
 	}
 	
-	$check = mysql_query("select * from users, content_user where users.usage = 2 and content_user.c_ID = '$c_ID' and content_user.u_ID = users.u_ID and content_user.usage = 7");
+	$check = mysql_query("SELECT users.cn_name FROM users JOIN content_user on users.u_ID = content_user.u_ID where users.usage = 2 and content_user.c_ID = '$c_ID' and content_user.usage = 7");
 	$rarr = array();
 	while($responsibility = mysql_fetch_array($check)){
 		$rarr[] = $responsibility['cn_name'];
 	}
 	
-	$check = mysql_query("select * from users, content_user where users.usage = 2 and content_user.c_ID = '$c_ID' and content_user.u_ID = users.u_ID and content_user.usage = 3");
+	$check = mysql_query("SELECT users.cn_name FROM users JOIN content_user on users.u_ID = content_user.u_ID where users.usage = 2 and content_user.c_ID = '$c_ID' and content_user.usage = 1");
 	$aarr = array();
 	while($assistant = mysql_fetch_array($check)){
 		$aarr[] = $assistant['cn_name'];

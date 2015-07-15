@@ -10,23 +10,27 @@
 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
 
 <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/LaPitto/default.css" />
+<link rel="stylesheet" type="text/css" href="/LaPitto/docs.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="/LaPitto/default.css" /> -->
 <script src="table.js"></script>
 <style type="text/css">
   div.contentFloat{float: right;width: 80%;padding-right: 20px}
 </style>
-
 </head>
+
 <body onload="load()">
+
+
+
 <div class="title">校长办公室督办系统 - 当前用户：</div>
 <div class="container-fluid">
 <div class="row">
 <div class="col-lg-12"> 
-  <span style="color:#fff">
+  <span>
   年份：<select id="year_a" class="yearList" style="color:#000">
         </select>
   </span>
-  <span style="color:#fff">
+  <span>
   层级：<input type="radio" name="level" value="1"/>1
         <input type="radio" name="level" value="2"/>2
         <input type="radio" name="level" value="3"/>3
@@ -42,7 +46,9 @@
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#importModal">导入</button>
   </span>
 
-    
+  <span>
+    <button type="button" class="btn btn-primary pull-right" id="logout">登出</button>
+  </span>    
   <span>
     <a href="/LaPitto/Main/preview.html" target="_blank">
       <button type="button" class="btn btn-primary pull-right">预览</button>
@@ -50,16 +56,16 @@
   </span>
   <div class="clearfix"></div>
 </div>
-<div class="col-lg-12">
-  <table id="MainTable" border="1" style="margin-top:10px">
+<div class="col-lg-8 col-lg-push-2" style="padding-left: 8%;padding-right: 8%">
+  <table id="MainTable" class="table table-bordered table-striped" style="margin-top:10px;width:100%">
     <tr>
-      <td colspan="12"><h1 style="margin:5px">会议记录</h1></td>
+      <td colspan="12"><div style="margin:5px">校长办公会</div></td>
     </tr>
   </table>
   <br />
   <br />  
   
-  <span class="admin">
+  <!-- <span class="admin">
   <table id="SmallTable" border="1" style="color:#fff">
     <tr>
       <td style="color:#fff">用户名</td>
@@ -82,7 +88,7 @@
         <td><input type="button" onclick="addUser()" id = "au_button" value="注册或修改用户" /></td>
     </tr>
   </table>
-  </span> 
+  </span>  -->
 
   
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -93,46 +99,78 @@
           <h4 class="modal-title" id="myModalLabel">添加会议</h4>
         </div>
         <div class="modal-body">
-          <div>年份：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="ac_year" class="yearList"></select></div>
-          <div>会议编号：&nbsp;&nbsp;&nbsp;<input type="text" id="vc_meeting"/></div>
-          <div>议题：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="ac_1"/></div>
-          <div>拟办意见：&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="ac_3"></textarea></div>
-          <div>牵头校领导：<select size=3 multiple="multiple" id="ac_leader"></select>（按住ctrl键进行多选）</div>
-          <div>牵头单位：&nbsp;&nbsp;&nbsp;<select size=3 multiple="multiple" id="ac_responsibility"></select>（按住ctrl键进行多选）</div>
-          <div>协助单位：&nbsp;&nbsp;&nbsp;<select size="3" multiple="multiple" id="ac_assistant"></select>（按住ctrl键进行多选）</div>
-          <div>落实状态：&nbsp;&nbsp;
+          <div class="pull-left" style="width:15%">年份：</div>
+          <div class="pull-left">
+            <select id="ac_year" class="yearList"></select>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">会议编号：</div>
+          <div class="pull-left">
+            <input type="text" id="vc_meeting"/>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">议题：</div>
+          <div class="pull-left">
+            <input type="text" id="ac_1"/>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">拟办意见：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="ac_3"></textarea>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">牵头校领导：</div>
+          <div class="pull-left" id="ac_leader"></div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">牵头单位：</div>
+          <div class="pull-left" id="ac_responsibility">
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">协助单位：</div>
+          <div class="pull-left" id="ac_assistant">
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">落实状态：</div>
+          <div class="pull-left">
             <select id="ac_7">
               <option>暂无</option>
               <option>开始推进</option>
               <option>推进中Ⅰ</option>
               <option>推进中Ⅱ</option>
               <option>推进中Ⅲ</option>
-              <option>推进中Ⅳ</option>
-              <option>推进中Ⅴ</option>
-              <option>推进中Ⅵ</option>
-              <option>推进中Ⅶ</option>
               <option>基本完成</option>
               <option>已完成</option>
             </select>
           </div>
-          <div>备注：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="ac_8"></textarea></div>
-          <div>落实备注：&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="ac_9"></textarea></div>
-          <div>节点计划：&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="ac_10"></textarea></div>
-          <div>进度自评：&nbsp;&nbsp;
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">备注：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="ac_8"></textarea>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">落实备注：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="ac_9"></textarea>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">节点计划：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="ac_10"></textarea>
+          </div>
+          <div class="clearfix"></div>
+          <div class="pull-left" style="width:15%">进度自评：</div>
+          <div class="pull-left">
             <select id="ac_11">
               <option>暂无</option>
               <option>开始推进</option>
               <option>推进中Ⅰ</option>
               <option>推进中Ⅱ</option>
               <option>推进中Ⅲ</option>
-              <option>推进中Ⅳ</option>
-              <option>推进中Ⅴ</option>
-              <option>推进中Ⅵ</option>
-              <option>推进中Ⅶ</option>
               <option>基本完成</option>
               <option>已完成</option>
             </select>
           </div>
+          <div class="clearfix"></div>
 
         </div>
         <div class="modal-footer">
@@ -143,6 +181,7 @@
     </div>
   </div>
 
+
   <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -151,43 +190,67 @@
           <h4 class="modal-title" id="myModalLabel">修改会议</h4>
         </div>
         <div class="modal-body">
-          <div class="super">拟办意见：&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="rc_3"></textarea></div>
-          <div class="super">牵头校领导：<select size=3 multiple="multiple" id="rc_leader"></select>（按住ctrl键进行多选）</div>
-          <div class="super">牵头单位：&nbsp;&nbsp;&nbsp;<select size=3 multiple="multiple" id="rc_responsibility"></select>（按住ctrl键进行多选）</div>
-          <div class="super">协助单位：&nbsp;&nbsp;&nbsp;<select size="3" multiple="multiple" id="rc_assistant"></select>（按住ctrl键进行多选）</div>
-          <div class="super">落实状态：&nbsp;&nbsp;
+          <div class="super pull-left" style="width:15%">拟办意见：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="rc_3"></textarea>
+          </div>
+          <div class="clearfix"></div>
+
+          <div class="super pull-left" style="width:15%">牵头校领导：</div>
+          <div class="pull-left" id="rc_leader"></div>
+          <div class="clearfix"></div>
+
+          <div class="super pull-left" style="width:15%">牵头单位：</div>
+          <div class="pull-left" id="rc_responsibility"></div>
+          <div class="clearfix"></div>
+
+          <div class="super pull-left" style="width:15%">协助单位：</div>
+          <div class="pull-left" id="rc_assistant"></div>
+          <div class="clearfix"></div>
+
+          <div class="super pull-left" style="width:15%">落实状态：</div>
+          <div class="pull-left">
             <select id="rc_7">
               <option>暂无</option>
               <option>开始推进</option>
               <option>推进中Ⅰ</option>
               <option>推进中Ⅱ</option>
               <option>推进中Ⅲ</option>
-              <option>推进中Ⅳ</option>
-              <option>推进中Ⅴ</option>
-              <option>推进中Ⅵ</option>
-              <option>推进中Ⅶ</option>
               <option>基本完成</option>
               <option>已完成</option>
             </select>
           </div>
-          <div class="super">备注：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="rc_8"></textarea></div>
-          <div class="comment modify">落实备注：&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="rc_9"></textarea></div>
-          <div class="program modify">节点计划：&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="3" cols="60" id="rc_10"></textarea></div>
-          <div class="self modify">进度自评：&nbsp;&nbsp;
+          <div class="clearfix"></div>
+
+          <div class="super pull-left" style="width:15%">备注：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="rc_8"></textarea>
+          </div>
+          <div class="clearfix"></div>
+
+          <div class="comment modify pull-left" style="width:15%">落实备注：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="rc_9"></textarea>
+          </div>
+          <div class="clearfix"></div>
+          <div class="program modify pull-left" style="width:15%">节点计划：</div>
+          <div class="pull-left">
+            <textarea rows="3" cols="60" id="rc_10"></textarea>
+          </div>
+          <div class="clearfix"></div>
+          <div class="self modify pull-left" style="width:15%">进度自评：</div>
+          <div class="pull-left">
             <select id="rc_11">
               <option>暂无</option>
               <option>开始推进</option>
               <option>推进中Ⅰ</option>
               <option>推进中Ⅱ</option>
               <option>推进中Ⅲ</option>
-              <option>推进中Ⅳ</option>
-              <option>推进中Ⅴ</option>
-              <option>推进中Ⅵ</option>
-              <option>推进中Ⅶ</option>
               <option>基本完成</option>
               <option>已完成</option>
             </select>
           </div>
+          <div class="clearfix"></div>
 
         </div>
         <div class="modal-footer">
@@ -197,6 +260,9 @@
       </div>
     </div>
   </div>
+
+
+
   <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
