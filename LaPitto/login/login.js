@@ -59,6 +59,11 @@ var HOMEPAGE = "http://120.24.232.140/LaPitto/Main/"
 
 
 $(document).ready(function(){
+	$(document).keypress(function(e){
+		if(e.keyCode == 13){
+			$('#login-btn').click();
+		}
+	})
 	$('#login-btn').on('click',function(){
 		var username = $('#t_name').val();
 		var password = $('#t_pw').val();
