@@ -525,10 +525,16 @@ $(document).ready(function(){
 	$("#exportModal").on('show.bs.modal',function(event){
 		var sel_year = $("select#year_a").find("option:selected").text();
 		var modal = $(this);
-		$.post("export.php",{year:sel_year},function(data){
-			modal.find("#exportContent").val(data);
+		var auth;
+		$.post("identify.php",{},function(data){
+			auth = data;
+			$.post("export.php",{"year":sel_year,"auth":auth},function(data){
+				modal.find("#exportContent").val(data);
+			})
 		})
+		
 	});
+
 	$("#importButton").on("click",function(){
 		var content = $("#importContent").val();
 		$("#importModal").modal('hide');

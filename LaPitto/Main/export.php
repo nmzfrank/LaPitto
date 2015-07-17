@@ -1,7 +1,7 @@
 <?php session_start(); ?>
 <?php
 	$year = $_POST['year'];
-
+	$auth = $_POST['auth'];
 
 	$con = mysql_connect('localhost','LaPitto','X2KxFXdTBmHeMwzm');
 	mysql_query('SET NAMES UTF8');  
@@ -10,7 +10,7 @@
 	}
 	if(!mysql_select_db('LaPitto', $con))
 		die('Could not connect: ' . mysql_error());	
-	getMeeting(1,$year,3);
+	getMeeting($auth,$year,3);
 	
 	
 	function getMeeting($u_ID, $year, $level){
