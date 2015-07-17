@@ -33,6 +33,7 @@ function load(){
 	showResponsibility()
 	showAssistantList()
 	showContentList()
+	relo();
 	$("input[name='level'][value='2']").attr('checked','true');
 	if(cur=="管理员"){
 		$("span.admin").show()
@@ -46,7 +47,7 @@ function load(){
 		$("span.admin").hide()
 		$("span.normal").hide()
 	}
-	relo();
+	
 	$(".lv-meeting").show();
 	$(".panel-heading").show();
 	$(".content-table").hide();
@@ -291,7 +292,7 @@ $(document).ready(function(){
 			$(".vc_7[data-content!='"+status+"']").parentsUntil("tbody").hide();
 			$(".vc_7[data-content='"+status+"']").parentsUntil("tbody").show();
 		} else{
-			location.reload();
+			$(".vc_7[data-content]").parentsUntil("tbody").show();
 		}
 	})
 
@@ -301,7 +302,7 @@ $(document).ready(function(){
 			$(".self_status[data-content!='"+self_status+"']").parentsUntil("tbody").hide();
 			$(".self_status[data-content='"+self_status+"']").parentsUntil("tbody").show();
 		} else{
-			location.reload();
+			$(".self_status[data-content]").parentsUntil("tbody").show();
 		}
 	})
 
@@ -343,7 +344,7 @@ $(document).ready(function(){
 	$(document).on("click",".lockComment",function(){
 		var str = new String();
 		var arr = new Array();
-		str = $(this).siblings(".cid").text();
+		str = $(this).parent().siblings(".cid").text();
 		arr = str.split('：');
 		cid = arr[1];
 		$.post("lock.php",{index:cid,type:0},function(){
@@ -353,7 +354,7 @@ $(document).ready(function(){
 	$(document).on("click",".lockProgram",function(){
 		var str = new String();
 		var arr = new Array();
-		str = $(this).siblings(".cid").text();
+		str = $(this).parent().siblings(".cid").text();
 		arr = str.split('：');
 		cid = arr[1];
 		$.post("lock.php",{index:cid,type:1},function(){
@@ -363,7 +364,7 @@ $(document).ready(function(){
 	$(document).on("click",".lockSelf",function(){
 		var str = new String();
 		var arr = new Array();
-		str = $(this).siblings(".cid").text();
+		str = $(this).parent().siblings(".cid").text();
 		arr = str.split('：');
 		cid = arr[1];
 		$.post("lock.php",{index:cid,type:2},function(){
@@ -371,36 +372,19 @@ $(document).ready(function(){
 		});
 	});
 
-	// $(document).on('click','.modify',function(){
-	// 	var self_status = $(this).siblings().find("select.cc_11").find("option:selected").text();
-	// 	var comment_a = $(this).siblings().find('textarea.comment_a').val();
-	// 	var program = $(this).siblings().find('textarea.program').val();
-	// 	var meeting = $(this).attr("data-cid");
-	// 	var year = $("select#year_a").find("option:selected").text();
-	// 	var comment_b = $(this).siblings().find('div.vc_8').text();
-	// 	var opinion_a = $(this).siblings().find('div.vc_3').text();
-	// 	var reason = $(this).siblings().find('div.vc_1').text();
-	// 	var leader = $(this).siblings().find('div.vc_leader').text();
-	// 	var responsibility = $(this).siblings().find('div.vc_responsibility').text();
-	// 	var assistant = $(this).siblings().find('div.vc_assistant').text();
-	// 	var status = $(this).siblings().find('div.vc_7').text();
-	// 	$.post("newContent.php",{
-	// 		"year":year,
-	// 		"meeting":meeting,
-	// 		"reason":reason,
-	// 		"opinion_a":opinion_a,
-	// 		"comment_b":comment_b,
-	// 		"comment_a":comment_a,
-	// 		"program":program,
-	// 		"leader":leader,
-	// 		"responsibility":responsibility,
-	// 		"assistant":assistant,
-	// 		"status":status,
-	// 		"self_status":self_status
-	// 	},function(status){
-	// 		relo();
-	// 	});
-	// })
+	$(document).on('click','.btn.modify',function(){
+		var cid = $(this).data('cid');
+		var program = $(this).siblings().find(".program").text();
+		var comment_a = $(this).siblings().find(".comment_a").text();
+		var self_status = $(this).siblings().find(".self_status").find("option:selected").attr("value");
+		$.post("updateStatus.php",{"cid":cid,"program":program,"comment_a":comment_a,"self_status":self_status},function(data){
+			if(data == 0){
+				alert("保存成功！")
+			} else{
+				alert("保存失败！")
+			}
+		})
+	})
 
 	$(document).on('click',"#ac_button",function(){
 		var modal = $("#myModal");
@@ -411,11 +395,11 @@ $(document).ready(function(){
 		var comment_b = modal.find("#ac_8").val();
 		var comment_a = modal.find("#ac_9").val();
 		var program = modal.find("#ac_10").val();
-		var leader = modal.find("#ac_leader").find("option:selected").text();
-		var responsibility = modal.find("#ac_responsibility").find("option:selected").text();
-		var assistant = modal.find("#ac_assistant").find("option:selected").text();
-		var status = modal.find("#ac_7").find("option:selected").text();
-		var self_status = modal.find("#ac_11").find("option:selected").text();
+		var leader = modal.find("#ac_leader").find(".btn-success").text();
+		var responsibility = modal.find("#ac_responsibility").find(".btn-success").text();
+		var assistant = modal.find("#ac_assistant").find(".btn-success").text();
+		var status = modal.find("#ac_7").find("option:selected").attr("value");
+		var self_status = modal.find("#ac_11").find("option:selected").attr("value");
 		$.post("newContent.php",{
 			"year":year,
 			"meeting":meeting,
@@ -445,8 +429,8 @@ $(document).ready(function(){
 		var leader = modal.find("#rc_leader").find(".btn-success").text();
 		var responsibility = modal.find("#rc_responsibility").find(".btn-success").text();
 		var assistant = modal.find("#rc_assistant").find(".btn-success").text();
-		var status = modal.find("#rc_7").find("option:selected").text();
-		var self_status = modal.find("#rc_11").find("option:selected").text();
+		var status = modal.find("#rc_7").find("option:selected").attr('value');
+		var self_status = modal.find("#rc_11").find("option:selected").attr('value');
 		var leader;
 		var responsibility;
 		var assistant;

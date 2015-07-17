@@ -101,12 +101,34 @@
 			echo("<div class='col-lg-6 lv-content'><div style='font-size:1.3em'>"."牵头领导：".$ans['leader']."</div></div>");
 			echo("<div class='col-lg-6 lv-content'><div style='font-size:1.3em'>"."牵头单位：".$ans['responsibility']."</div></div>");
 			echo("<div class='col-lg-6 lv-content'><div style='font-size:1.3em'>"."协助单位：".$ans['assistant']."</div></div>");
-			echo("<div class='col-lg-8 lv-content'>");
+			echo("<div class='col-lg-12 lv-content'>");
 			echo("<div><div style='font-size:1.3em'>"."拟办意见：</div><div class='contentFloat vc_3'>".$ans['opinion_a']."</div></div>");
 			echo("<div class='clearfix'></div>");
-			echo("<div><div style='font-size:1.3em'>"."落实状态：</div><div class='contentFloat vc_7' data-content='$status'>".$status_dict[$ans['status']]."</div></div>");
-			echo("<div class='clearfix'></div>");
 			echo("<div><div style='font-size:1.3em'>"."备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</div><div class='contentFloat vc_8'>".$ans['comment_b']."</div></div>");
+			echo("<div class='clearfix'></div>");
+			
+			if($u_ID==1){
+				echo("<div><div style='font-size:1.3em'>"."节点计划：</div><div class='contentFloat vc_10'>".$ans['program']."</div></div>");
+				echo("<div class='clearfix'></div>");
+				if($ans['loc_program']==0){
+					echo('<button class="btn btn-info lockProgram" > 已解锁</button>');
+					echo("<div class='clearfix'></div>");
+				} else{
+					echo('<button class="btn btn-danger lockProgram"> 已锁定</button>');
+					echo("<div class='clearfix'></div>");
+				}
+				
+			}
+			else{
+				if($ans['loc_program']==0){
+					echo("<div><div style='font-size:1.3em'>"."节点计划：<span style='font-size:0.8em;color:#60DD7C'>（已解锁）</span></div>");
+					echo("<textarea class='program' rows='3' cols='60' style='color:black;margin-left:150px'>".$ans['program']."</textarea></div>");
+				} else{
+					echo("<div><div style='font-size:1.3em'>"."节点计划：<span style='font-size:0.8em;color:red'>（已锁定）</span></div><div class='contentFloat program'>".$ans['program']."</div></div>");
+				}
+				echo("<div class='clearfix'></div>");
+			}
+			echo("<div><div style='font-size:1.3em'>"."落实状态：</div><div class='contentFloat vc_7' data-content='$status'>".$status_dict[$ans['status']]."</div></div>");
 			echo("<div class='clearfix'></div>");
 			if($u_ID==1){
 				echo("<div><div style='font-size:1.3em'>"."落实备注：</div><div class='contentFloat vc_9'>".$ans['comment_a']."</div></div>");
@@ -116,15 +138,6 @@
 					echo("<div class='clearfix'></div>");
 				} else{
 					echo('<button class="btn btn-danger lockComment" > 已锁定</button>');
-					echo("<div class='clearfix'></div>");
-				}
-				echo("<div><div style='font-size:1.3em'>"."节点计划：</div><div class='contentFloat vc_10'>".$ans['program']."</div></div>");
-				echo("<div class='clearfix'></div>");
-				if($ans['loc_program']==0){
-					echo('<button class="btn btn-info lockProgram" > 已解锁</button>');
-					echo("<div class='clearfix'></div>");
-				} else{
-					echo('<button class="btn btn-danger lockProgram"> 已锁定</button>');
 					echo("<div class='clearfix'></div>");
 				}
 				echo("<div><div style='font-size:1.3em'>"."进度自评：</div><div class='contentFloat self_status' data-content='$self_status'>".$status_dict[$ans['self_status']]."</div></div>");
@@ -144,57 +157,46 @@
 					echo("<div><div style='font-size:1.3em'>"."落实备注：<span style='font-size:0.8em;color:#60DD7C'>（已解锁）</span></div>");
 					echo("<textarea class='comment_a' rows='3' cols='60' style='color:black;margin-left:150px'>".$ans['comment_a']."</textarea></div>");
 				} else{
-					echo("<div><div style='font-size:1.3em'>"."落实备注：<span style='font-size:0.8em;color:red'>（已锁定）</span></div><div class='contentFloat'>".$ans['comment_a']."</div></div>");
+					echo("<div><div style='font-size:1.3em'>"."落实备注：<span style='font-size:0.8em;color:red'>（已锁定）</span></div><div class='contentFloat comment_a'>".$ans['comment_a']."</div></div>");
 				}
 				echo("<div class='clearfix'></div>");
-				
-				
-				if($ans['loc_program']==0){
-					echo("<div><div style='font-size:1.3em'>"."节点计划：<span style='font-size:0.8em;color:#60DD7C'>（已解锁）</span></div>");
-					echo("<textarea class='program' rows='3' cols='60' style='color:black;margin-left:150px'>".$ans['program']."</textarea></div>");
-				} else{
-					echo("<div><div style='font-size:1.3em'>"."节点计划：<span style='font-size:0.8em;color:red'>（已锁定）</span></div><div class='contentFloat'>".$ans['program']."</div></div>");
-				}
-				echo("<div class='clearfix'></div>");
-				
-				
 				if($ans['loc_self']==0){
 					echo("<div><div style='font-size:1.3em'>"."进度自评：<span style='font-size:0.8em;color:#60DD7C'>（已解锁）</span></div>");
 					echo("<select class='cc_11 self_status' rows='3' cols='60' style='color:black;margin-left:150px' data-content='$self_status'>");
 				    if($status_dict[$ans['self_status']] == "暂无"){
-				    	echo("<option selected='selected'>暂无</option>");
+				    	echo("<option selected='selected' value='0'>暂无</option>");
 				   	}else{
-				   		echo("<option>暂无</option>");
+				   		echo("<option value='0'>暂无</option>");
 				   	}
 				   	if($status_dict[$ans['self_status']] == "开始推进"){
-				    	echo("<option selected='selected'>开始推进</option>");
+				    	echo("<option selected='selected' value='10'>开始推进</option>");
 				   	}else{
-				   		echo("<option>开始推进</option>");
+				   		echo("<option value='10'>开始推进</option>");
 				   	}
-				   	if($status_dict[$ans['self_status']] == "推进中Ⅰ"){
-				    	echo("<option selected='selected'>推进中Ⅰ</option>");
+				   	if($status_dict[$ans['self_status']] == "推进中I"){
+				    	echo("<option selected='selected' value='30'>推进中I</option>");
 				   	}else{
-				   		echo("<option>推进中Ⅰ</option>");
+				   		echo("<option value='30'>推进中Ⅰ</option>");
 				   	}
-				   	if($status_dict[$ans['self_status']] == "推进中Ⅱ"){
-				    	echo("<option selected='selected'>推进中Ⅱ</option>");
+				   	if($status_dict[$ans['self_status']] == "推进中II"){
+				    	echo("<option selected='selected' value='50'>推进中II</option>");
 				   	}else{
-				   		echo("<option>推进中Ⅱ</option>");
+				   		echo("<option value='50'>推进中Ⅱ</option>");
 				   	}
-				   	if($status_dict[$ans['self_status']] == "推进中Ⅲ"){
-				    	echo("<option selected='selected'>推进中Ⅲ</option>");
+				   	if($status_dict[$ans['self_status']] == "推进中III"){
+				    	echo("<option selected='selected' value='70'>推进中III</option>");
 				   	}else{
-				   		echo("<option>推进中Ⅲ</option>");
+				   		echo("<option value='70'>推进中Ⅲ</option>");
 				   	}
 				   	if($status_dict[$ans['self_status']] == "基本完成"){
-				    	echo("<option selected='selected'>基本完成</option>");
+				    	echo("<option selected='selected' value='90'>基本完成</option>");
 				   	}else{
-				   		echo("<option>基本完成</option>");
+				   		echo("<option value='90'>基本完成</option>");
 				   	}
 				   	if($status_dict[$ans['self_status']] == "已完成"){
-				    	echo("<option selected='selected'>已完成</option>");
+				    	echo("<option selected='selected' value='100'>已完成</option>");
 				   	}else{
-				   		echo("<option>已完成</option>");
+				   		echo("<option value='100'>已完成</option>");
 				   	}
 				         
 				    echo("</select></div>");
@@ -202,9 +204,9 @@
 					echo("<div><div style='font-size:1.3em'>"."进度自评：<span style='font-size:0.8em;color:red'>（已锁定）</span></div><div class='contentFloat self_status' data-content='$self_status'>".$status_dict[$ans['self_status']]."</div></div>");
 				}
 				echo("<div class='clearfix'></div>");
-				echo("<button class='btn btn-primary pull-right modify' data-cid='$cid' >修改</button>");
+				echo("<button class='btn btn-primary pull-right modify' data-cid='$cid' >保存</button>");
 				echo("<div class='clearfix'></div>");
-				echo("</div>");
+				echo("</div>");				
 			}
 			echo("</td></tr>");
 			echo("</div>");

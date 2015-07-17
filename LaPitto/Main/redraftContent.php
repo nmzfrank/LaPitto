@@ -22,8 +22,8 @@
 	$c_ID = $previous['c_ID'];
 	$e_ID = $previous['e_ID'];
 	
-	$self_status = $status_dict[$_POST['self_status']];
-	$status = $status_dict[$_POST['status']];
+	$self_status = $_POST['self_status'];
+	$status = $_POST['status'];
 	
 	$opinion_a = $_POST['opinion_a'];
 	$leader_text = $_POST['leader'];

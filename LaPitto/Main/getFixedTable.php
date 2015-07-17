@@ -31,7 +31,7 @@
 		$rarr[] = $responsibility['cn_name'];
 	}
 	
-	$check = mysql_query("SELECT users.cn_name FROM users JOIN content_user on users.u_ID = content_user.u_ID where users.usage = 2 and content_user.c_ID = '$c_ID' and content_user.usage = 1");
+	$check = mysql_query("SELECT users.cn_name FROM users JOIN content_user on users.u_ID = content_user.u_ID where users.usage = 2 and content_user.c_ID = '$c_ID' and content_user.usage = 3");
 	$aarr = array();
 	while($assistant = mysql_fetch_array($check)){
 		$aarr[] = $assistant['cn_name'];

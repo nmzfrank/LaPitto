@@ -7,15 +7,9 @@
 	}
 	if(!mysql_select_db('LaPitto', $con))
 		die('Could not connect: ' . mysql_error());
-	
-	$status_dict = array();
-	$dict_query = mysql_query("select * from status_tran");
-		while($dict_ans = mysql_fetch_array($dict_query)){
-			$status_dict[$dict_ans['string']] = $dict_ans['status'];
-		}
 
-	$self_status = $status_dict[$_POST['self_status']];
-	$status = $status_dict[$_POST['status']];
+	$self_status = $_POST['self_status'];
+	$status = $_POST['status'];
 	
 	$year = $_POST['year'];
 	$meeting = $_POST['meeting'];
