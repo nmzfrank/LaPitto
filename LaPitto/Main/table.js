@@ -23,7 +23,7 @@ function load(){
 		async:false,
 		success: function(xmlobj){
 			cur = xmlobj
-			$("div.title").html("校长办公室督办系统 - 当前用户："+xmlobj)
+			$("div.title").replaceWith("<div class='title navbar-text navbar-right' style='margin-right:0px;padding-left:5px;padding-right:5px'>校长办公室督办系统 - 当前用户："+xmlobj+"</div>" )
 		}
 	});
 	
@@ -33,6 +33,7 @@ function load(){
 	showResponsibility()
 	showAssistantList()
 	showContentList()
+	relo();
 	$("input[name='level'][value='2']").attr('checked','true');
 	if(cur=="管理员"){
 		$("span.admin").show()
@@ -46,28 +47,34 @@ function load(){
 		$("span.admin").hide()
 		$("span.normal").hide()
 	}
-	relo();
+	
 	$(".lv-meeting").show();
 	$(".panel-heading").show();
-	$(".panel-body").hide();
+	$(".content-table").hide();
 }
 function relo(){
 	var tb = document.getElementById("MainTable")
 	str = "<tr>\
-        	<td colspan=\"12\"><div style=\"margin:5px\">校长办公会</div></td>\
+        	<td colspan=\"12\"><div class='pull-left' style=\"margin:5px\">校长办公会</div>\
+        	<span class='admin'>\
+          		<button type=\"button\" class=\"btn btn-info pull-right\" data-toggle=\"modal\" data-target=\"#myModal\">添加内容</button>\
+        	</span>\
+        	<div class='clearfix'></div>\
+        	</td>\
         </tr>" 
 	line = "undefined"
 
 	var sel_year = $("select#year_a").find("option:selected").text()
 	var sel_level = $("input[name='level']:checked").val()
-	
+	var status = $("#statusList").find("option:selected").text()
+	var self_status = $("#selfStatusList").find("option:selected").text()
 
 	$.ajax({
 		type: "POST",
 		url: "reloadTable.php",
 		cache:false,
 		async:false,
-		data:"level="+sel_level+"&year="+sel_year, 
+		data:"level="+sel_level+"&year="+sel_year+"&status="+status+"&self_status"+self_status, 
 		success: function(xmlobj){
 			line = xmlobj
 		}
@@ -265,19 +272,39 @@ $(document).ready(function(){
 		if (sel_level == 1){
 			$(".lv-meeting").show();
 			$(".panel-heading").hide();
-			$(".panel-body").hide();
+			$(".content-table").hide();
 		}
 		if (sel_level == 2){
 			$(".lv-meeting").show();
 			$(".panel-heading").show();
-			$(".panel-body").hide();
+			$(".content-table").hide();
 		}
 		if (sel_level == 3){
 			$(".lv-meeting").show();
 			$(".panel-heading").show();
-			$(".panel-body").show();
+			$(".content-table").show();
 		}
 	});
+
+	$("select#statusList").on("change",function(){
+		var status = $(this).find("option:selected").text();
+		if(status != "全选"){
+			$(".vc_7[data-content!='"+status+"']").parentsUntil("tbody").hide();
+			$(".vc_7[data-content='"+status+"']").parentsUntil("tbody").show();
+		} else{
+			$(".vc_7[data-content]").parentsUntil("tbody").show();
+		}
+	})
+
+	$("select#selfStatusList").on("change",function(){
+		var self_status = $(this).find("option:selected").text();
+		if(self_status != "全选"){
+			$(".self_status[data-content!='"+self_status+"']").parentsUntil("tbody").hide();
+			$(".self_status[data-content='"+self_status+"']").parentsUntil("tbody").show();
+		} else{
+			$(".self_status[data-content]").parentsUntil("tbody").show();
+		}
+	})
 
 	$(document).on('click','.lv-meeting',function(){
 		var event_bar = $(this).siblings('.lv-event');
@@ -285,7 +312,7 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click',".panel-heading",function(){
-		$(this).siblings('.panel-body').toggle();
+		$(this).siblings('.content-table').toggle();
 	});
 	
 	$('#logout').on('click',function(){
@@ -294,9 +321,16 @@ $(document).ready(function(){
 		})
 	});
 
-	$("#year_a").on("click",function(){
-		$("input[name='level'][value='2']").attr('checked','true');
+	$("#year_a").on("click",{},function(){
 		relo();
+		$.post('checkAuth.php',function(){
+			$("input[name='level'][value='1']").attr('checked',false);
+			$("input[name='level'][value='2']").attr('checked','true');
+			$("input[name='level'][value='3']").attr('checked',false);
+		})
+		$(".lv-meeting").show();
+		$(".panel-heading").show();
+		$(".content-table").hide();
 	});
 
 	$(document).on("click",".btn.btn-danger.multiselect",function(){
@@ -310,7 +344,7 @@ $(document).ready(function(){
 	$(document).on("click",".lockComment",function(){
 		var str = new String();
 		var arr = new Array();
-		str = $(this).siblings(".cid").text();
+		str = $(this).parent().siblings(".cid").text();
 		arr = str.split('：');
 		cid = arr[1];
 		$.post("lock.php",{index:cid,type:0},function(){
@@ -320,7 +354,7 @@ $(document).ready(function(){
 	$(document).on("click",".lockProgram",function(){
 		var str = new String();
 		var arr = new Array();
-		str = $(this).siblings(".cid").text();
+		str = $(this).parent().siblings(".cid").text();
 		arr = str.split('：');
 		cid = arr[1];
 		$.post("lock.php",{index:cid,type:1},function(){
@@ -330,7 +364,7 @@ $(document).ready(function(){
 	$(document).on("click",".lockSelf",function(){
 		var str = new String();
 		var arr = new Array();
-		str = $(this).siblings(".cid").text();
+		str = $(this).parent().siblings(".cid").text();
 		arr = str.split('：');
 		cid = arr[1];
 		$.post("lock.php",{index:cid,type:2},function(){
@@ -338,36 +372,19 @@ $(document).ready(function(){
 		});
 	});
 
-	// $(document).on('click','.modify',function(){
-	// 	var self_status = $(this).siblings().find("select.cc_11").find("option:selected").text();
-	// 	var comment_a = $(this).siblings().find('textarea.comment_a').val();
-	// 	var program = $(this).siblings().find('textarea.program').val();
-	// 	var meeting = $(this).attr("data-cid");
-	// 	var year = $("select#year_a").find("option:selected").text();
-	// 	var comment_b = $(this).siblings().find('div.vc_8').text();
-	// 	var opinion_a = $(this).siblings().find('div.vc_3').text();
-	// 	var reason = $(this).siblings().find('div.vc_1').text();
-	// 	var leader = $(this).siblings().find('div.vc_leader').text();
-	// 	var responsibility = $(this).siblings().find('div.vc_responsibility').text();
-	// 	var assistant = $(this).siblings().find('div.vc_assistant').text();
-	// 	var status = $(this).siblings().find('div.vc_7').text();
-	// 	$.post("newContent.php",{
-	// 		"year":year,
-	// 		"meeting":meeting,
-	// 		"reason":reason,
-	// 		"opinion_a":opinion_a,
-	// 		"comment_b":comment_b,
-	// 		"comment_a":comment_a,
-	// 		"program":program,
-	// 		"leader":leader,
-	// 		"responsibility":responsibility,
-	// 		"assistant":assistant,
-	// 		"status":status,
-	// 		"self_status":self_status
-	// 	},function(status){
-	// 		relo();
-	// 	});
-	// })
+	$(document).on('click','.btn.modify',function(){
+		var cid = $(this).data('cid');
+		var program = $(this).siblings().find(".program").text();
+		var comment_a = $(this).siblings().find(".comment_a").text();
+		var self_status = $(this).siblings().find(".self_status").find("option:selected").attr("value");
+		$.post("updateStatus.php",{"cid":cid,"program":program,"comment_a":comment_a,"self_status":self_status},function(data){
+			if(data == 0){
+				alert("保存成功！")
+			} else{
+				alert("保存失败！")
+			}
+		})
+	})
 
 	$(document).on('click',"#ac_button",function(){
 		var modal = $("#myModal");
@@ -378,11 +395,11 @@ $(document).ready(function(){
 		var comment_b = modal.find("#ac_8").val();
 		var comment_a = modal.find("#ac_9").val();
 		var program = modal.find("#ac_10").val();
-		var leader = modal.find("#ac_leader").find("option:selected").text();
-		var responsibility = modal.find("#ac_responsibility").find("option:selected").text();
-		var assistant = modal.find("#ac_assistant").find("option:selected").text();
-		var status = modal.find("#ac_7").find("option:selected").text();
-		var self_status = modal.find("#ac_11").find("option:selected").text();
+		var leader = modal.find("#ac_leader").find(".btn-success").text();
+		var responsibility = modal.find("#ac_responsibility").find(".btn-success").text();
+		var assistant = modal.find("#ac_assistant").find(".btn-success").text();
+		var status = modal.find("#ac_7").find("option:selected").attr("value");
+		var self_status = modal.find("#ac_11").find("option:selected").attr("value");
 		$.post("newContent.php",{
 			"year":year,
 			"meeting":meeting,
@@ -412,8 +429,8 @@ $(document).ready(function(){
 		var leader = modal.find("#rc_leader").find(".btn-success").text();
 		var responsibility = modal.find("#rc_responsibility").find(".btn-success").text();
 		var assistant = modal.find("#rc_assistant").find(".btn-success").text();
-		var status = modal.find("#rc_7").find("option:selected").text();
-		var self_status = modal.find("#rc_11").find("option:selected").text();
+		var status = modal.find("#rc_7").find("option:selected").attr('value');
+		var self_status = modal.find("#rc_11").find("option:selected").attr('value');
 		var leader;
 		var responsibility;
 		var assistant;
@@ -508,10 +525,16 @@ $(document).ready(function(){
 	$("#exportModal").on('show.bs.modal',function(event){
 		var sel_year = $("select#year_a").find("option:selected").text();
 		var modal = $(this);
-		$.post("export.php",{year:sel_year},function(data){
-			modal.find("#exportContent").val(data);
+		var auth;
+		$.post("identify.php",{},function(data){
+			auth = data;
+			$.post("export.php",{"year":sel_year,"auth":auth},function(data){
+				modal.find("#exportContent").val(data);
+			})
 		})
+		
 	});
+
 	$("#importButton").on("click",function(){
 		var content = $("#importContent").val();
 		$("#importModal").modal('hide');
