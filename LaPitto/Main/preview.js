@@ -19,8 +19,8 @@ $(document).ready(function(){
 		var tb = document.getElementById("MainTable")
 		str = "<div class='row show-grid'>\
 		<div class='col-lg-8'>校长会议</div>\
-		<div class='col-lg-2 meeting-completion-real'>实际完成率</div>\
-		<div class='col-lg-2 meeting-completion-ref'>参考完成率</div>" 
+		<div class='col-lg-2 year-completion-real'>实际完成率</div>\
+		<div class='col-lg-2 year-completion-ref'>参考完成率</div>" 
 		line = "undefined"
 		
 		
@@ -42,10 +42,38 @@ $(document).ready(function(){
 			+"&self_status="+document.getElementById("self_status").checked
 			+"&year="+sel_year,
 			success: function(xmlobj){
-				line = xmlobj		
+				line = xmlobj	
 			}
 		});
 			tb.innerHTML = str+line+"</div>";
+			var count = 0
+			var real = 0.0
+			var ref = 0.0
+			$(".cid").each(function(){
+				var cindex = $(this).data('cid');
+				var status = parseInt($(".status[data-cid='"+cindex+"']").attr('value'))
+				real = real + status
+				count = count + 1
+				if(ref == 100){
+					ref = ref + 1
+				}
+			})
+			real = real / count 
+			ref = ref / count
+			$(".year-completion-real").text($(".year-completion-real").text()+": "+real.toFixed(2)+'%')
+			$(".year-completion-ref").text($(".year-completion-ref").text()+": "+ref.toFixed(2)+'%')
+			$(".meeting-completion-real").each(function(){
+				year = $(this).data('year');
+				meeting = $(this).data('meeting');
+				real = parseFloat($(".real[data-year='"+year+"'][data-meeting='"+meeting+"']").data('real')).toFixed(2);
+				$(this).text($(this).text()+":"+real+"%")
+			})
+			$(".meeting-completion-ref").each(function(){
+				year = $(this).data('year');
+				meeting = $(this).data('meeting');
+				ref = parseFloat($(".ref[data-year='"+year+"'][data-meeting='"+meeting+"']").data('ref')).toFixed(2);
+				$(this).text($(this).text()+":"+ref+"%")
+			})
 		}
 		else{
 		$.ajax({
