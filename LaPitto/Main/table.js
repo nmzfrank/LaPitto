@@ -503,23 +503,13 @@ $(document).ready(function(){
 			});
 			count = $("#rc_7 option").length;
 			value = data[4];
-			for( var i = 0; i < count; i++){
-				if($("#rc_7").get(0).options[i].text == value){
-					$("#rc_7").get(0).options[i].selected = true;
-					break;
-				}
-			}
+			$("#rc_7").find("option[value="+value+"]").attr("selected",true);
 			$("#rc_8").val(data[5]);
 			$("#rc_9").val(data[6]);
 			$("#rc_10").val(data[7]);
 			count = $("#rc_11 option").length;
 			value = data[8];
-			for( var i = 0; i < count; i++){
-				if($("#rc_11").get(0).options[i].text == value){
-					$("#rc_11").get(0).options[i].selected = true;
-					break;
-				}
-			}
+			$("#rc_11").find("option[value="+value+"]").attr("selected",true);
 		},'json');
 	});
 	$("#exportModal").on('show.bs.modal',function(event){
