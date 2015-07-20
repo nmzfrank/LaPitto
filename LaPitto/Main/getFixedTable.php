@@ -37,6 +37,6 @@
 		$aarr[] = $assistant['cn_name'];
 	}
 	
-	$ret = array($result['opinion_a'],$larr,$rarr,$aarr,$status_dict[$result['status']],$result['comment_b'],$result['comment_a'],$result['program'],$status_dict[$result['self_status']]);
+	$ret = array($result['opinion_a'],$larr,$rarr,$aarr,$result['status'],$result['comment_b'],$result['comment_a'],$result['program'],$result['self_status']);
 	echo(json_encode($ret));
 ?>
