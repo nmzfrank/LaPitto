@@ -18,9 +18,9 @@ $(document).ready(function(){
 		var sel_year = $("select#year_a").find("option:selected").text()
 		var tb = document.getElementById("MainTable")
 		str = "<div class='row show-grid'>\
-		<div class='col-lg-8'>校长会议</div>\
-		<div class='col-lg-2 year-completion-real'>实际完成率</div>\
-		<div class='col-lg-2 year-completion-ref'>参考完成率</div>" 
+		<div class='col-lg-8' style='background-color:rgb(0,204,255);margin-top:'>校长会议</div>\
+		<div class='col-lg-2 year-completion-real' style='background-color:rgb(0,204,255)'>实际完成率</div>\
+		<div class='col-lg-2 year-completion-ref' style='background-color:rgb(0,204,255)'>参考完成率</div>" 
 		line = "undefined"
 		
 		
@@ -30,17 +30,7 @@ $(document).ready(function(){
 			url: "previewByMeeting.php",
 			cache:false,
 			async:false,
-			data:"cid="+document.getElementById("cid").checked
-			+"&content="+document.getElementById("content").checked
-			+"&leader="+document.getElementById("leader").checked
-			+"&responsibility="+document.getElementById("responsibility").checked
-			+"&assistant="+document.getElementById("assistant").checked
-			+"&status="+document.getElementById("status").checked
-			+"&comment_b="+document.getElementById("comment_b").checked
-			+"&comment_a="+document.getElementById("comment_a").checked
-			+"&program="+document.getElementById("program").checked
-			+"&self_status="+document.getElementById("self_status").checked
-			+"&year="+sel_year,
+			data:"&year="+sel_year,
 			success: function(xmlobj){
 				line = xmlobj	
 			}
