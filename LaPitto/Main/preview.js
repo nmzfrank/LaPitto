@@ -1,15 +1,11 @@
 $(document).ready(function(){
+	var LOGIN_PAGE = '120.24.232.140/LaPitto/index.html'
 	$.post('checkAuth.php',function(data){
 		if(data == 1){
 			window.location = LOGIN_PAGE;
 		}
 	});
 
-	$(window).unload(function(){
-		$.post('destroySession.php',function(data){
-			
-		})
-	})
 	var sel = $("select.yearList")
 	var date = new Date()
 	var years = date.getFullYear()
@@ -21,9 +17,10 @@ $(document).ready(function(){
 		var display = $("select#display").find("option:selected").text()
 		var sel_year = $("select#year_a").find("option:selected").text()
 		var tb = document.getElementById("MainTable")
-		str = "<tr>\
-        	<td colspan=\"12\">会议记录</td>\
-        </tr>" 
+		str = "<div class='row show-grid'>\
+		<div class='col-lg-8'>校长会议</div>\
+		<div class='col-lg-2 meeting-completion-real'>实际完成率</div>\
+		<div class='col-lg-2 meeting-completion-ref'>参考完成率</div>" 
 		line = "undefined"
 		
 		
@@ -48,7 +45,7 @@ $(document).ready(function(){
 				line = xmlobj		
 			}
 		});
-			tb.innerHTML = str+line;
+			tb.innerHTML = str+line+"</div>";
 		}
 		else{
 		$.ajax({
