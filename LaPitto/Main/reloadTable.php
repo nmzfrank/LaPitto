@@ -75,7 +75,8 @@
 			$result = getEventCompletion($ans['e_ID']);
 			echo("<div class='col-lg-12 lv-event'>");
 			echo("<div class='panel panel-success' style='margin-top:10px;'>");
-			echo("<div class='panel-heading' style='font-size:2em'>议题： ".$ans['content']."<span class='pull-right' style='font-size:0.5em; padding-top:10px;'>实际完成率：$result[0]%;&nbsp;&nbsp;&nbsp;参考完成率: $result[1]%;</span></div>");
+			// echo("<div class='panel-heading' style='font-size:2em'>议题： ".$ans['content']."<span class='pull-right' style='font-size:0.5em; padding-top:10px;'>实际完成率：$result[0]%;&nbsp;&nbsp;&nbsp;参考完成率: $result[1]%;</span></div>");
+			echo("<div class='panel-heading' style='font-size:2em'>议题： ".$ans['content']."</div>");
 			echo("<table class='table table-striped content-table'>");
 			getContent($ans['e_ID'], $u_ID);
 			echo("</table></div></div>");
@@ -94,10 +95,10 @@
 
 		while($ans = mysql_fetch_array($query)){
 			$cid = $ans['c_index'];
-			$status = $status_dict[$ans['status']];
-			$self_status = $status_dict[$ans['self_status']];
+			$status = $ans['status'];
+			$self_status = $ans['self_status'];
 			echo("<tr><td>");
-			echo("<div class='cid col-lg-6 lv-content'><div style='font-size:1.3em'>"."意见编号：".$ans['c_index']."</div></div>");
+			echo("<div class='cid col-lg-6 lv-content' data-cid='$cid'><div style='font-size:1.3em'>"."意见编号：".$ans['c_index']."</div></div>");
 			echo("<div class='col-lg-6 lv-content'><div style='font-size:1.3em'>"."牵头领导：".$ans['leader']."</div></div>");
 			echo("<div class='col-lg-6 lv-content'><div style='font-size:1.3em'>"."牵头单位：".$ans['responsibility']."</div></div>");
 			echo("<div class='col-lg-6 lv-content'><div style='font-size:1.3em'>"."协助单位：".$ans['assistant']."</div></div>");
