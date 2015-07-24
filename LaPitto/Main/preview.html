@@ -28,7 +28,13 @@
 					<option value="meeting">按会议排序</option>
 				</select>
 
-			<input type="checkbox" id="cid"> 意见编号
+			显示模式：
+				<select id="mod">
+					<option value="1">详细</option>
+					<option value="2">单行</option>
+				</select>
+
+			<!-- <input type="checkbox" id="cid"> 意见编号
 			<input type="checkbox" id="content"> 拟办意见
 			<input type="checkbox" id="leader"> 牵头领导
 			<input type="checkbox" id="responsibility"> 牵头单位
@@ -37,15 +43,22 @@
 			<input type="checkbox" id="program"> 节点计划
 			<input type="checkbox" id="status"> 落实状态
 			<input type="checkbox" id="comment_a"> 落实备注
-			<input type="checkbox" id="self_status"> 进度自评
+			<input type="checkbox" id="self_status"> 进度自评 -->
 			<button class="btn btn-info" id="displayPreview">显示预览</button>
 	</div>
-    <div class="col-lg-12">
-    <table id="MainTable" border="1" style="margin-top:10px">
-    <tr>
-      <td colspan="12">会议记录</td>
-    </tr>
-  </table>
-  </div>
+	<div class="container-fluid" id="MainTable">
+	<div class="row show-grid">
+		<div class="col-lg-1 table-header" style="display:none">意见编号</div>
+		<div class="col-lg-1 table-header" style="display:none">牵头领导</div>
+		<div class="col-lg-1 table-header" style="display:none">牵头单位</div>
+		<div class="col-lg-1 table-header" style="display:none">协助单位</div>
+		<div class="col-lg-1 table-header" style="display:none">落实状态</div>
+		<div class="col-lg-1 table-header" style="display:none">拟办意见</div>
+		<div class="col-lg-1 table-header" style="display:none">备注</div>
+	    <div class="col-lg-8">校长会议</div>
+		<div class="col-lg-2 year-completion-real">实际完成率</div>
+		<div class="col-lg-2 year-completion-ref">参考完成率</div>
+  	</div>
+  	</div>
 </body>
 </html>
