@@ -16,26 +16,36 @@ $(document).ready(function(){
 	$("#displayPreview").on("click",function(){
 		var display = $("select#display").find("option:selected").text()
 		var sel_year = $("select#year_a").find("option:selected").text()
+		var mod = $("select#mod").find("option:selected").attr("value")
 		var tb = document.getElementById("MainTable")
 		str = "<div class='row show-grid'>\
+		<div class='col-lg-1 table-header' style='border:1px solid rgba(86,61,124,.2);background-color:rgb(0,204,255);display:none'>意见编号</div>\
+		<div class='col-lg-1 table-header' style='border:1px solid rgba(86,61,124,.2);background-color:rgb(0,204,255);display:none'>牵头领导</div>\
+		<div class='col-lg-1 table-header' style='border:1px solid rgba(86,61,124,.2);background-color:rgb(0,204,255);display:none'>牵头单位</div>\
+		<div class='col-lg-1 table-header' style='border:1px solid rgba(86,61,124,.2);background-color:rgb(0,204,255);display:none'>协助单位</div>\
+		<div class='col-lg-1 table-header' style='border:1px solid rgba(86,61,124,.2);background-color:rgb(0,204,255);display:none'>落实状态</div>\
+		<div class='col-lg-5 table-header' style='border:1px solid rgba(86,61,124,.2);background-color:rgb(0,204,255);display:none'>拟办意见</div>\
+		<div class='col-lg-2 table-header' style='border:1px solid rgba(86,61,124,.2);background-color:rgb(0,204,255);display:none'>备注</div>\
 		<div class='col-lg-8' style='background-color:rgb(0,204,255);margin-top:'>校长会议</div>\
 		<div class='col-lg-2 year-completion-real' style='background-color:rgb(0,204,255)'>实际完成率</div>\
 		<div class='col-lg-2 year-completion-ref' style='background-color:rgb(0,204,255)'>参考完成率</div>" 
 		line = "undefined"
-		
-		
+
 		if(display=="按会议排序"){
 		$.ajax({
 			type: "POST",
 			url: "previewByMeeting.php",
 			cache:false,
 			async:false,
-			data:"&year="+sel_year,
+			data:"year="+sel_year+"&mod="+mod,
 			success: function(xmlobj){
 				line = xmlobj	
 			}
 		});
-			tb.innerHTML = str+line+"</div>";
+		tb.innerHTML = str+line+"</div>";
+		if(mod == 2){
+			$(".table-header").show()
+		}
 			var count = 0
 			var real = 0.0
 			var ref = 0.0

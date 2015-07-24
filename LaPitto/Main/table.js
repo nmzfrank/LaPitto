@@ -2,10 +2,16 @@ var xmlHttp
 var line
 var str
 var LOGIN_PAGE = "http://120.24.232.140/LaPitto/"
-
+$.post('checkAuth.php',function(data){
+		if(data == 1){
+			alert("用户未登录！")
+			window.location = LOGIN_PAGE;
+		}
+	});
 
 
 function load(){
+
 	$("span#admin").hide()
 	$("span#normal").hide()
 	var cur = "unkown"
