@@ -54,12 +54,12 @@ $(document).ready(function(){
 				var status = parseInt($(".status[data-cid='"+cindex+"']").attr('value'))
 				real = real + status
 				count = count + 1
-				if(ref == 100){
+				if(status == 100){
 					ref = ref + 1
 				}
 			})
 			real = real / count 
-			ref = ref / count
+			ref = ref * 100 / count
 			$(".year-completion-real").text($(".year-completion-real").text()+": "+real.toFixed(2)+'%')
 			$(".year-completion-ref").text($(".year-completion-ref").text()+": "+ref.toFixed(2)+'%')
 			$(".meeting-completion-real").each(function(){
