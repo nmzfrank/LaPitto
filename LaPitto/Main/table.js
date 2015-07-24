@@ -40,6 +40,7 @@ function load(){
 	showAssistantList()
 	showContentList()
 	relo();
+	
 	$("input[name='level'][value='2']").attr('checked','true');
 	if(cur=="管理员"){
 		$("span.admin").show()
@@ -62,14 +63,18 @@ function relo(){
 	var tb = document.getElementById("MainTable")
 	str = "<tr>\
         	<td colspan=\"12\"><div class='pull-left' style=\"margin:5px\">校长办公会</div>\
-        	<span class='admin'>\
-          		<button type=\"button\" class=\"btn btn-info pull-right\" data-toggle=\"modal\" data-target=\"#myModal\">添加内容</button>\
+        	<span class='admin pull-right'>\
+          		<button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#myModal\">添加内容</button>\
         	</span>\
+        	<span id='rate' class='pull-right' style='margin:5px'></span>\
         	<div class='clearfix'></div>\
         	</td>\
         </tr>" 
 	line = "undefined"
-
+	var count = 0
+	var real = 0.0 
+	var ref = 0.0
+	
 	var sel_year = $("select#year_a").find("option:selected").text()
 	var sel_level = $("input[name='level']:checked").val()
 	var status = $("#statusList").find("option:selected").text()
@@ -87,6 +92,17 @@ function relo(){
 	});
 
 	tb.innerHTML = str+line
+	$('.cid').each(function(){
+		count = count + 1
+		var status = parseInt($(this).siblings().find(".vc_7").data("content"))
+		if (status == 100){
+			ref = ref + 1
+		}
+		real = real + status
+	});
+	real = real / count  
+	ref = ref * 100 / count
+	$("#rate").text("实际完成率："+real.toFixed(2)+"%; 参考完成率："+ref.toFixed(2) +"%;")
 }
 
 function showYearList(){
@@ -272,6 +288,7 @@ $(document).ready(function(){
 			window.location = LOGIN_PAGE;
 		}
 	});
+	
 
 	$("input[name='level']").on('click',function(){
 		var sel_level = $("input[name='level']:checked").val()
@@ -316,6 +333,8 @@ $(document).ready(function(){
 		var event_bar = $(this).siblings('.lv-event');
 		event_bar.toggle();
 	});
+
+
 
 	$(document).on('click',".panel-heading",function(){
 		$(this).siblings('.content-table').toggle();
