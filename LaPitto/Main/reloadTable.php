@@ -63,14 +63,14 @@
 			echo("<tr>");
 			echo("<td><div class='container-fluid'><div class='row'>");
 			echo("<div class='col-lg-12 lv-meeting' style='background-color:rgb(128,185,188); border-radius:0.5em; padding:5px;'><span style='font-size:1.5em;'>".$year."-第".$ans['meeting']."次校长办公会"."</span><span class='pull-right' style='padding:5px;'>实际完成率：$result[0]%;&nbsp;&nbsp;&nbsp;参考完成率: $result[1]%;</span></div>");
-			getEvent($ans['meeting'],$u_ID,$level);
+			getEvent($mid,$u_ID,$level);
 			echo("</div></div></td>");
 			echo("</tr>");
 		}
 	}
 	
-	function getEvent($meeting, $u_ID,$level){
-		$query = mysql_query("select distinct content.e_ID, event.content from content, event, content_user, meeting where content_user.u_ID = '$u_ID' and content_user.c_ID = content.c_ID and content.e_ID = event.e_ID and event.m_ID = meeting.m_ID and meeting.meeting = '$meeting' order by content.e_ID asc");
+	function getEvent($m_ID, $u_ID,$level){
+		$query = mysql_query("select distinct content.e_ID, event.content from content, event, meeting where content.e_ID = event.e_ID and event.m_ID = '$m_ID' order by content.e_ID asc");
 		while($ans = mysql_fetch_array($query)){
 			$result = getEventCompletion($ans['e_ID']);
 			echo("<div class='col-lg-12 lv-event'>");
@@ -91,7 +91,7 @@
 			$status_dict[$dict_ans['status']] = $dict_ans['string'];
 		}
 
-		$query = mysql_query("select distinct content.* from content, content_user where content_user.u_ID = '$u_ID' and content_user.c_ID = content.c_ID and content.e_ID = '$e_ID' order by content.c_index asc");
+		$query = mysql_query("select distinct content.* from content where content.e_ID = '$e_ID' order by content.c_index asc");
 
 		while($ans = mysql_fetch_array($query)){
 			$cid = $ans['c_index'];
