@@ -8,6 +8,8 @@
 	if(!mysql_select_db('LaPitto', $con))
 		die('Could not connect: ' . mysql_error());
 
+	addNewMeeting();
+
 	function establishLinks($c_index){
 		$leader_text = $_POST['leader'];
 		$responsibility_text = $_POST['responsibility'];
@@ -16,26 +18,36 @@
 		$responsibility = explode(';', $responsibility_text);
 		$assistant = explode(';', $assistant_text);
 		$query = mysql_query("SELECT c_ID FROM content WHERE c_index='$c_index'");
-		$result = msql_fetch_array($query);
+		$result = mysql_fetch_array($query);
 		$c_ID = $result['c_ID'];
-		$query = mysql_query("INSERT INTO content_user (c_ID,u_ID,usage) VALUES ('$c_ID',1,7)")
+		var_dump($c_ID);
+		$query = mysql_query("INSERT INTO content_user (c_ID,u_ID,`usage`) VALUES ('$c_ID',1,7)");
 		foreach ($leader as $value) {
+			if(!$value){
+				continue;
+			}
 			$query = mysql_query("SELECT u_ID FROM users WHERE cn_name='$value'");
-			$result = msql_fetch_array($query);
+			$result = mysql_fetch_array($query);
 			$u_ID = $result['u_ID'];
-			$query = mysql_query("INSERT INTO content_user (c_ID,u_ID,usage) VALUES ('$c_ID','$u_ID',7)")
+			$query = mysql_query("INSERT INTO content_user (c_ID,u_ID,`usage`) VALUES ('$c_ID','$u_ID',7)");
 		}
 		foreach ($responsibility as $value) {
+			if(!$value){
+				continue;
+			}
 			$query = mysql_query("SELECT u_ID FROM users WHERE cn_name='$value'");
-			$result = msql_fetch_array($query);
+			$result = mysql_fetch_array($query);
 			$u_ID = $result['u_ID'];
-			$query = mysql_query("INSERT INTO content_user (c_ID,u_ID,usage) VALUES ('$c_ID','$u_ID',7)")
+			$query = mysql_query("INSERT INTO content_user (c_ID,u_ID,`usage`) VALUES ('$c_ID','$u_ID',7)");
 		}
 		foreach ($assistant as $value) {
+			if(!$value){
+				continue;
+			}
 			$query = mysql_query("SELECT u_ID FROM users WHERE cn_name='$value'");
-			$result = msql_fetch_array($query);
+			$result = mysql_fetch_array($query);
 			$u_ID = $result['u_ID'];
-			$query = mysql_query("INSERT INTO content_user (c_ID,u_ID,usage) VALUES ('$c_ID','$u_ID',3)")
+			$query = mysql_query("INSERT INTO content_user (c_ID,u_ID,`usage`) VALUES ('$c_ID','$u_ID',3)");
 		}
 	}
 
@@ -54,18 +66,20 @@
 		$comment_b = $_POST['comment_b'];
 		$comment_a = $_POST['comment_a'];
 		$program = $_POST['program'];
-
 		$query = mysql_query("SELECT MAX(content.c_ID) as c_max FROM content WHERE content.e_ID='$e_ID'");
-		if($result =mysql_fetch_array($query)){
+		$result =mysql_fetch_array($query);
+
+		if($result['c_max']){
 			$c_ID = $result['c_max'];
 			$query = mysql_query("SELECT c_index FROM content WHERE c_ID='$c_ID'");
-			$result = msql_fetch_array($query);
+			$result = mysql_fetch_array($query);
 			$c_index = $result['c_index'];
 			$info = explode('-',$c_index);
 			$info[4] = $info[4] + 1;
-			$c_index = $info[0].$info[1].$info[2].$info[3].$info[4];
+			$c_index = $info[0].'-'.$info[1].'-'.$info[2].'-'.$info[3].'-'.$info[4];
 			$query = mysql_query("INSERT INTO content (e_ID,c_index,opinion_a,leader,responsibility,assistant,status,comment_b,comment_a,program,self_status) VALUES ('$e_ID','$c_index','$opinion_a','$leader_text','$responsibility_text','$assistant_text','$status','$comment_b','$comment_a','$program','$self_status')");
-		} else{
+		} 
+		else{
 			$query = mysql_query("SELECT e_index FROM event WHERE e_ID='$e_ID'");
 			$result = mysql_fetch_array($query);
 			$e_index = $result['e_index'];
@@ -90,6 +104,7 @@
 		}
 		addNewContent($m_ID,$e_ID);
 	}
+
 
 	function addNewMeeting(){
 		$year = $_POST['year'];
